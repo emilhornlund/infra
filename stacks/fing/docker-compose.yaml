@@ -1,0 +1,20 @@
+services:
+  fing-agent:
+    image: fing/fing-agent:1.1.1
+    container_name: fing-agent
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "1900:1900/udp"
+      - "44444:44444/tcp"
+    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: unless-stopped
+    volumes:
+      - fing-data-volume:/app/fingdata
+
+volumes:
+  fing-data-volume:
+    name: fing-data-volume

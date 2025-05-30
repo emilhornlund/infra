@@ -61,3 +61,16 @@ Changes to Compose files in this repository will automatically trigger stack upd
 - Avoid committing sensitive data or secrets
 - Use meaningful commit messages to track configuration changes
 - Test changes locally using `docker-compose` before pushing
+
+## 📦 Managed Services
+
+This GitOps repository manages the following self-hosted services using Docker Compose and Portainer.
+
+### 📡 [Fing Agent](./stacks/fing)
+A containerized Fing Agent for local network scanning and device monitoring.
+
+- Uses `fing/fing-agent` image
+- Runs with `NET_ADMIN` capability and `host` network mode for low-level access
+- Exposes port `44444`
+- Persists data in a named volume (`fing-data-volume`)
+- Ideal for discovering and tracking devices on your LAN
