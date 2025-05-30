@@ -1,0 +1,27 @@
+services:
+  quiz-gh-runner-1:
+    image: myoung34/github-runner:2.324.0
+    container_name: quiz-gh-runner-1
+    restart: unless-stopped
+    env_file: ./stack.env
+    environment:
+      - REPO_URL=https://github.com/emilhornlund/quiz
+      - RUNNER_NAME=quiz-docker-runner-1
+    security_opt:
+      - label:disable
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - gh-runner-data-volume:/runner/data
+      - gh-tmp-runner-volume:/tmp/runner
+    networks:
+      - core-network
+
+volumes:
+  gh-runner-data-volume:
+    name: gh-runner-data-volume
+  gh-tmp-runner-volume:
+    name: gh-tmp-runner-volume
+
+networks:
+  core-network:
+    external: true

@@ -74,3 +74,10 @@ A containerized Fing Agent for local network scanning and device monitoring.
 - Exposes port `44444`
 - Persists data in a named volume (`fing-data-volume`)
 - Ideal for discovering and tracking devices on your LAN
+
+### 🏃‍♂️ [GitHub Runner](./stacks/github-runner)
+A self-hosted GitHub Actions runner container for automating CI/CD workflows.
+
+- Uses `myoung34/github-runner`
+- Executes jobs for the `quiz` repository
+- Requires a GitHub PAT as an environment secret
