@@ -81,3 +81,12 @@ A self-hosted GitHub Actions runner container for automating CI/CD workflows.
 - Uses `myoung34/github-runner`
 - Executes jobs for the `quiz` repository
 - Requires a GitHub PAT as an environment secret
+
+### 🍃 [MongoDB](./stacks/mongodb)
+A containerized MongoDB 8.0 instance for development and local service usage.
+
+- Uses the official `mongo` image
+- Exposes port `27017`
+- Root credentials loaded via environment secrets
+- Persistent data stored in a named volume (`mongodb-data-volume`)
+- Connected to external network `core-network`

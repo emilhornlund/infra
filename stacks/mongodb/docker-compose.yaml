@@ -1,0 +1,20 @@
+services:
+  mongodb:
+    image: mongo:8.0.9
+    container_name: mongodb
+    hostname: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data-volume:/data/db
+    networks:
+      - core-network
+
+volumes:
+  mongodb-data-volume:
+    name: mongodb-data-volume
+
+networks:
+  core-network:
+    external: true
