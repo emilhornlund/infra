@@ -1,0 +1,55 @@
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:1.7
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DOCKER_HOST=unix:///tmp/docker.sock
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - nginx-proxy-certs-volume:/etc/nginx/certs:ro
+      - nginx-proxy-html-volume:/usr/share/nginx/html
+      - nginx-proxy-vhost-volume:/etc/nginx/vhost.d
+    networks:
+      - core-network
+    labels:
+      - com.github.nginx-proxy.nginx
+
+  acme-companion:
+    image: nginxproxy/acme-companion:2.6
+    container_name: acme-companion
+    restart: unless-stopped
+    depends_on:
+      - nginx-proxy
+    environment:
+      DEFAULT_EMAIL: ${CLOUDFLARE_EMAIL}
+      ACME_CHALLENGE: DNS-01
+      ACMESH_DNS_API_CONFIG: |-
+        DNS_API: dns_cf
+        CF_Key: ${CLOUDFLARE_KEY}
+        CF_Email: ${CLOUDFLARE_EMAIL}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - acme-volume:/etc/acme.sh
+      - nginx-proxy-certs-volume:/etc/nginx/certs
+      - nginx-proxy-html-volume:/usr/share/nginx/html
+      - nginx-proxy-vhost-volume:/etc/nginx/vhost.d
+    networks:
+      - core-network
+
+volumes:
+  acme-volume:
+    name: acme-volume
+  nginx-proxy-certs-volume:
+    name: nginx-proxy-certs-volume
+  nginx-proxy-html-volume:
+    name: nginx-proxy-html-volume
+  nginx-proxy-vhost-volume:
+    name: nginx-proxy-vhost-volume
+
+networks:
+  core-network:
+    external: true

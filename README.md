@@ -90,3 +90,12 @@ A containerized MongoDB 8.0 instance for development and local service usage.
 - Root credentials loaded via environment secrets
 - Persistent data stored in a named volume (`mongodb-data-volume`)
 - Connected to external network `core-network`
+
+### 🌐 [Nginx Proxy](./stacks/nginx-proxy)
+An automated reverse proxy with HTTPS support using Let's Encrypt DNS-01 challenges via Cloudflare.
+
+- Uses `nginxproxy/nginx-proxy` and `nginxproxy/acme-companion` images
+- Exposes ports 80 and 443
+- Automatically issues and renews SSL certificates
+- Certificates and ACME data stored in named volumes `nginx-proxy-certs-volume` and `acme-volume`
+- Proxies any container using `VIRTUAL_HOST` and `LETSENCRYPT_HOST` environment variables
