@@ -133,3 +133,12 @@ The frontend web interface for the quiz game platform, built with React and Vite
 - Communicates with the `quiz-service` backend over internal API
 - Web interface exposed via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
 - Connected to `core-network` for service integration
+
+### 🧱 [Redis](./stacks/redis)
+An in-memory key-value data store used by services like `quiz-service` for caching and pub/sub messaging.
+
+- Uses `redis` image
+- Exposes port `6379` for Redis clients
+- Requires `REDIS_PASSWORD` environment secret
+- Persists data in `redis-data-volume`
+- Connected to `core-network` for service-to-service communication

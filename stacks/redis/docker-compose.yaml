@@ -1,0 +1,20 @@
+services:
+  redis:
+    image: redis:8.0.1
+    container_name: redis
+    restart: unless-stopped
+    command: ["redis-server", "--loglevel", "warning", "--requirepass", "${REDIS_PASSWORD}"]
+    ports:
+      - "6379:6379"
+    volumes: 
+      - redis-data-volume:/data
+    networks:
+      - core-network
+
+volumes:
+  redis-data-volume:
+    name: redis-data-volume
+
+networks:
+  core-network:
+    external: true
