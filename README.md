@@ -161,3 +161,12 @@ A lightweight self-hosted password manager compatible with Bitwarden clients.
 - Persists data in `vaultwarden-data-volume`
 - Configured with domain `vault.emilhornlund.com`
 - Connected to `core-network` for proxy and service integration
+
+### 🔒 [WireGuard](./stacks/wireguard)
+A self-hosted VPN server for secure access to internal services and private networking.
+
+- Uses `linuxserver/wireguard` image
+- Exposes UDP port `51820` for VPN clients
+- Pre-configures one peer with QR and config file output
+- Persists configuration in `wireguard-config-volume`
+- Connected to `core-network` for accessing internal services like Pi-hole
