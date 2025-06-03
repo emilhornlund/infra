@@ -108,3 +108,11 @@ A local DNS-level ad blocker for network-wide ad and tracker filtering.
 - Joins `core-network` with static IP `172.20.0.8`
 - Web interface proxied via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
 - Admin password set using the `PIHOLE_PASSWORD` environment secret
+
+### 🧭 [Portainer](./stacks/portainer)
+A web-based management UI for Docker environments.
+
+- Uses `portainer/portainer-ce` image
+- Web interface is proxied via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
+- Stores configuration in the `portainer-data-volume` named volume
+- Connected to `core-network` for integrated reverse proxy access

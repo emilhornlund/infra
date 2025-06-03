@@ -1,0 +1,27 @@
+services:
+  portainer:
+    image: portainer/portainer-ce:2.30.1-alpine
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - 9443:9443
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    environment:
+      - VIRTUAL_HOST=portainer.emilhornlund.com
+      - VIRTUAL_PORT=9000
+      - LETSENCRYPT_HOST=portainer.emilhornlund.com
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer-data-volume:/data
+    networks:
+      - core-network
+
+volumes:
+  portainer-data-volume:
+    name: portainer-data-volume
+
+networks:
+  core-network:
+    external: true
