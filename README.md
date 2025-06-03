@@ -125,3 +125,11 @@ The backend API for a full-stack real-time quiz game platform.
 - Stores user uploads in `quiz-service-uploads-volume`
 - Requires secrets for Redis, MongoDB, JWT auth, and Pexels integration
 - Connected to `core-network` for service discovery
+
+### 🧠 [Quiz](./stacks/quiz)
+The frontend web interface for the quiz game platform, built with React and Vite.
+
+- Uses `emilhornlund/quiz` image
+- Communicates with the `quiz-service` backend over internal API
+- Web interface exposed via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
+- Connected to `core-network` for service integration
