@@ -1,0 +1,23 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:1.33.2-alpine
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Stockholm
+      - DOMAIN=https://vault.emilhornlund.com
+      - VIRTUAL_HOST=vault.emilhornlund.com
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=vault.emilhornlund.com
+    volumes:
+      - vaultwarden-data-volume:/data
+    networks:
+      - core-network
+
+volumes:
+  vaultwarden-data-volume:
+    name: vaultwarden-data-volume
+
+networks:
+  core-network:
+    external: true

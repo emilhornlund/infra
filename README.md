@@ -152,3 +152,12 @@ A secure private registry for hosting Docker images with HTTPS and basic auth.
 - Stores credentials in `registry-auth-volume`
 - Persists images in `registry-data-volume`
 - Connected to `core-network` for internal accessibility
+
+### 🔐 [Vaultwarden](./stacks/vaultwarden)
+A lightweight self-hosted password manager compatible with Bitwarden clients.
+
+- Uses `vaultwarden/server` image
+- Web interface exposed via `nginx-proxy` with HTTPS using Let's Encrypt
+- Persists data in `vaultwarden-data-volume`
+- Configured with domain `vault.emilhornlund.com`
+- Connected to `core-network` for proxy and service integration
