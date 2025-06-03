@@ -1,0 +1,32 @@
+services:
+  registry:
+    image: registry:2
+    container_name: registry
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      REGISTRY_HTTP_ADDR: :5000
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: "Private Docker Registry"
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/emils-nuc-server.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/emils-nuc-server.key
+    volumes:
+      - registry-auth-volume:/auth
+      - registry-certs-volume:/certs
+      - registry-data-volume:/var/lib/registry
+    networks:
+      - core-network
+
+volumes:
+  registry-auth-volume:
+    name: registry-auth-volume
+  registry-certs-volume:
+    name: registry-certs-volume
+  registry-data-volume:
+    name: registry-data-volume
+
+networks:
+  core-network:
+    external: true

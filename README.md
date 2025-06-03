@@ -142,3 +142,13 @@ An in-memory key-value data store used by services like `quiz-service` for cachi
 - Requires `REDIS_PASSWORD` environment secret
 - Persists data in `redis-data-volume`
 - Connected to `core-network` for service-to-service communication
+
+### 📦 [Private Docker Registry](./stacks/registry)
+A secure private registry for hosting Docker images with HTTPS and basic auth.
+
+- Uses `registry` image
+- Exposes port `5000` for Docker push/pull
+- Requires custom TLS cert and CA trust
+- Stores credentials in `registry-auth-volume`
+- Persists images in `registry-data-volume`
+- Connected to `core-network` for internal accessibility
