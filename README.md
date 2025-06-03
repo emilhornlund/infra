@@ -116,3 +116,12 @@ A web-based management UI for Docker environments.
 - Web interface is proxied via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
 - Stores configuration in the `portainer-data-volume` named volume
 - Connected to `core-network` for integrated reverse proxy access
+
+### 🧠 [Quiz Service](./stacks/quiz-service)
+The backend API for a full-stack real-time quiz game platform.
+
+- Uses `emilhornlund/quiz-service` image
+- Connects to Redis and MongoDB
+- Stores user uploads in `quiz-service-uploads-volume`
+- Requires secrets for Redis, MongoDB, JWT auth, and Pexels integration
+- Connected to `core-network` for service discovery
