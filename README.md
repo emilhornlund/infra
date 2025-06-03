@@ -99,3 +99,12 @@ An automated reverse proxy with HTTPS support using Let's Encrypt DNS-01 challen
 - Automatically issues and renews SSL certificates
 - Certificates and ACME data stored in named volumes `nginx-proxy-certs-volume` and `acme-volume`
 - Proxies any container using `VIRTUAL_HOST` and `LETSENCRYPT_HOST` environment variables
+
+### 🧿 [Pi-hole](./stacks/pihole)
+A local DNS-level ad blocker for network-wide ad and tracker filtering.
+
+- Uses `pihole/pihole` image
+- Exposes DNS ports `53/tcp` and `53/udp`
+- Joins `core-network` with static IP `172.20.0.8`
+- Web interface proxied via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
+- Admin password set using the `PIHOLE_PASSWORD` environment secret
