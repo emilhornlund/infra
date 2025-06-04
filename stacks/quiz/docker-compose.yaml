@@ -1,6 +1,6 @@
 services:
   quiz:
-    image: 192.168.0.65:9500/emilhornlund/quiz:baf99fa
+    image: emils-nuc-server:5000/quiz:f3bb8cc
     container_name: quiz
     restart: unless-stopped
     environment:
@@ -12,7 +12,6 @@ services:
       - LETSENCRYPT_HOST=quiz.emilhornlund.com
     networks:
       - core-network
-
 networks:
   core-network:
     external: true
