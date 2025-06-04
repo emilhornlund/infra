@@ -1,6 +1,6 @@
 services:
   quiz:
-    image: emils-nuc-server:5000/quiz:f3bb8cc
+    image: emils-nuc-server:5000/quiz:cf06c65
     container_name: quiz
     restart: unless-stopped
     environment:
