@@ -1,6 +1,6 @@
 services:
   quiz-service:
-    image: 192.168.0.65:9500/emilhornlund/quiz-service:baf99fa
+    image: emils-nuc-server:5000/quiz-service:f3bb8cc
     container_name: quiz-service
     restart: unless-stopped
     environment:
@@ -23,11 +23,9 @@ services:
       - quiz-service-uploads-volume:/uploads
     networks:
       - core-network
-
 volumes:
   quiz-service-uploads-volume:
     name: quiz-service-uploads-volume
-
 networks:
   core-network:
     external: true
