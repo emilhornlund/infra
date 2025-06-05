@@ -66,6 +66,13 @@ Changes to Compose files in this repository will automatically trigger stack upd
 
 This GitOps repository manages the following self-hosted services using Docker Compose and Portainer.
 
+### 🌐 [Cloudflare DDNS](./stacks/cloudflare-ddns)
+A lightweight dynamic DNS updater that automatically syncs your public IP with Cloudflare-managed domains.
+
+- Uses `favonia/cloudflare-ddns` image
+- Requires `CLOUDFLARE_API_TOKEN` for domain updates
+- Supports multiple domains via `DOMAINS` environment variable
+
 ### 📡 [Fing Agent](./stacks/fing)
 A containerized Fing Agent for local network scanning and device monitoring.
 
