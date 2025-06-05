@@ -116,6 +116,16 @@ A local DNS-level ad blocker for network-wide ad and tracker filtering.
 - Web interface proxied via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
 - Admin password set using the `PIHOLE_PASSWORD` environment secret
 
+### 📺 [Plex](./stacks/plex)
+A self-hosted media server for streaming movies, TV shows, and personal content across your devices.
+
+- Uses `linuxserver/plex` image with GPU acceleration via `/dev/dri`
+- Exposes the web UI through `nginx-proxy` with HTTPS via Let's Encrypt
+- Mounts `/mnt/media` for TV and movie libraries
+- Persists configuration in `plex-config-volume`
+- Optional `PLEX_CLAIM` token for initial server registration
+- Connected to `core-network` for integration with other services
+
 ### 🧭 [Portainer](./stacks/portainer)
 A web-based management UI for Docker environments.
 
