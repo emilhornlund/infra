@@ -1,0 +1,33 @@
+events {}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile      on;
+
+    map $http_x_api_key $api_key_valid {
+        default    0;
+        "${API_KEY}" 1;
+    }
+
+    upstream quiz-service { server quiz-service:8080; }
+
+    server {
+        listen 80;
+        server_name api.emilhornlund.com;
+
+        location ~ ^/api/quiz-service(?<rest>/.*|$) {
+            if ($api_key_valid = 0) { return 403; }
+            # remove /quiz-service and proxy
+            proxy_pass http://quiz-service/api$rest;
+        }
+
+        location ~ ^/api_docs/quiz-service(?<rest>/.*|$) {
+            # docs stay open, no key check
+            proxy_pass http://quiz-service/api_docs$rest;
+        }
+
+        rewrite ^(/api/quiz-service)$      $1/ permanent;
+        rewrite ^(/api_docs/quiz-service)$ $1/ permanent;
+    }
+}

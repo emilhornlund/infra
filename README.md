@@ -66,6 +66,17 @@ Changes to Compose files in this repository will automatically trigger stack upd
 
 This GitOps repository manages the following self-hosted services using Docker Compose and Portainer.
 
+### 🚪 [API Gateway](./stacks/api-gateway)
+A lightweight NGINX-based API gateway that securely exposes backend services behind a unified domain.
+
+- Uses `nginx:alpine` with dynamic configuration via `envsubst`
+- Protects service endpoints using an `X-API-Key` header
+- Routes:
+  - `/api/quiz-service/` → `quiz-service` backend (requires valid API key)
+  - `/api_docs/quiz-service/` → API documentation (public)
+- Configurable via `API_KEY` environment secret
+- Integrated with `nginx-proxy` on `api.emilhornlund.com`
+
 ### 🌐 [Cloudflare DDNS](./stacks/cloudflare-ddns)
 A lightweight dynamic DNS updater that automatically syncs your public IP with Cloudflare-managed domains.
 
