@@ -107,6 +107,16 @@ An automated reverse proxy with HTTPS support using Let's Encrypt DNS-01 challen
 - Certificates and ACME data stored in named volumes `nginx-proxy-certs-volume` and `acme-volume`
 - Proxies any container using `VIRTUAL_HOST` and `LETSENCRYPT_HOST` environment variables
 
+### 🧠 [Ollama + Open WebUI](./stacks/ollama)
+A self-hosted large language model (LLM) API and web interface powered by Intel GPU acceleration and Ollama-compatible models.
+
+- **Ollama Backend**: Runs the `intelanalytics/ipex-llm-inference-cpp-xpu` image with Intel GPU support.
+- **Web UI**: Uses `open-webui` to provide a chat-style frontend interface.
+- **Exposed via**: `ollama.emilhornlund.com` through `nginx-proxy` and secured with Let's Encrypt.
+- **GPU Support**: Uses `/dev/dri`, sets persistent SYCL cache, and allows full access to Intel accelerators.
+- **Persistence**: LLM models and UI state stored in `ollama-data-volume` and `openwebui-data-volume`.
+- **Connected to** `core-network` for access to shared services and proxy.
+
 ### 🧿 [Pi-hole](./stacks/pihole)
 A local DNS-level ad blocker for network-wide ad and tracker filtering.
 

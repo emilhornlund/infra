@@ -1,0 +1,53 @@
+services:
+  ollama:
+    image: intelanalytics/ipex-llm-inference-cpp-xpu:latest
+    container_name: ollama
+    restart: unless-stopped
+    devices:
+      - /dev/dri:/dev/dri
+    group_add:
+      - "render"
+    privileged: true
+    shm_size: "16g"
+    mem_limit: "32g"
+    environment:
+      OLLAMA_HOST: 0.0.0.0
+      OLLAMA_NUM_GPU: "999"
+      ZES_ENABLE_SYSMAN: "1"
+      SYCL_CACHE_PERSISTENT: "1"
+      SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS: "1"
+      no_proxy: "localhost,127.0.0.1"
+    volumes:
+      - ollama-data-volume:/root/.ollama
+    networks:
+      - core-network
+    command: |
+      > bash -c "source /opt/intel/oneapi/setvars.sh && /llm/scripts/launch_ollama.sh serve"
+
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: openwebui
+    restart: unless-stopped
+    depends_on:
+      - ollama
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      VIRTUAL_HOST: ollama.emilhornlund.com
+      VIRTUAL_PORT: 8080
+      LETSENCRYPT_HOST: ollama.emilhornlund.com
+    expose:
+      - "8080"
+    volumes:
+      - openwebui-data-volume:/app/backend/data
+    networks:
+      - core-network
+
+volumes:
+  ollama-data-volume:
+    name: ollama-data-volume
+  openwebui-data-volume:
+    name: openwebui-data-volume
+
+networks:
+  core-network:
+    external: true
