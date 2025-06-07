@@ -1,0 +1,24 @@
+services:
+  prod-quiz-service:
+    image: emils-nuc-server:5000/quiz-service:cf06c65
+    container_name: prod-quiz-service
+    restart: unless-stopped
+    env_file:
+      - stacks.env
+    environment:
+      NODE_ENV: production
+      SERVER_ALLOW_ORIGIN: https://quiz.emilhornlund.com,https://klurigo.com
+      REDIS_DB: 0
+      MONGODB_DB: klurigo_prod
+    volumes:
+      - prod-quiz-service-uploads-volume:/uploads
+    networks:
+      - core-network
+
+volumes:
+  prod-quiz-service-uploads-volume:
+    name: prod-quiz-service-uploads-volume
+
+networks:
+  core-network:
+    external: true

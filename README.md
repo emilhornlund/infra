@@ -158,11 +158,12 @@ A web-based management UI for Docker environments.
 ### 🧠 [Quiz Service](./stacks/quiz-service)
 The backend API for a full-stack real-time quiz game platform.
 
-- Uses `emilhornlund/quiz-service` image
-- Connects to Redis and MongoDB
-- Stores user uploads in `quiz-service-uploads-volume`
-- Requires secrets for Redis, MongoDB, JWT auth, and Pexels integration
-- Connected to `core-network` for service discovery
+- Uses `emils-nuc-server:5000/quiz-service` image
+- Supports both `beta` and `production` deployments
+- Connects to Redis and MongoDB with isolated DBs per environment
+- Stores uploads in dedicated volumes (`beta-quiz-service-uploads-volume`, `prod-quiz-service-uploads-volume`)
+- Requires secrets for Redis, MongoDB, JWT auth, and Pexels API
+- Connected to `core-network` for service discovery and routing
 
 ### 🧠 [Quiz](./stacks/quiz)
 The frontend web interface for the quiz game platform, built with React and Vite.

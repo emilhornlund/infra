@@ -1,20 +1,37 @@
 # 🧠 Quiz Service Stack
 
-This stack deploys the backend API for the quiz game platform, built with NestJS. It supports real-time game updates via Server-Sent Events (SSE) and integrates with Redis, MongoDB, and Pexels for media content.
+This stack defines two deployment variants (`beta` and `prod`) for the backend API of the quiz game platform, built with NestJS. It supports real-time updates via Server-Sent Events (SSE), integrates with Redis and MongoDB, and fetches media from Pexels.
 
 ## 🐳 Service Overview
 
-- **Image**: `192.168.0.65:9500/emilhornlund/quiz-service:<tag>`
-- **Port**: Runs internally on port `8080` (proxied externally via reverse proxy if needed)
+- **Image**: `emils-nuc-server:5000/quiz-service:<tag>`
+- **Port**: Internally runs on port `8080`
 - **Environment**:
-  - Uses `production` mode (`NODE_ENV`)
-  - Depends on Redis and MongoDB (defined by host/port)
-  - Stores image uploads in `quiz-service-uploads-volume`
-- **Network**: Connected to `core-network` for inter-service communication
+  - Uses `NODE_ENV` to distinguish environments (`beta` or `production`)
+  - Uses `SERVER_ALLOW_ORIGIN` to set allowed CORS domains
+  - Connects to Redis and MongoDB using environment config
+  - Stores uploaded files in separate named volumes per environment
+- **Networks**: Both services connect to the shared `core-network`
+
+## 🧪 Beta Deployment
+
+- **Compose file**: `docker-compose.beta.yaml`
+- **Allowed Origin**: `https://beta.klurigo.com`
+- **Redis DB**: `1`
+- **MongoDB DB**: `klurigo_beta`
+- **Uploads Volume**: `beta-quiz-service-uploads-volume`
+
+## 🚀 Production Deployment
+
+- **Compose file**: `docker-compose.prod.yaml`
+- **Allowed Origins**: `https://quiz.emilhornlund.com`, `https://klurigo.com`
+- **Redis DB**: `0`
+- **MongoDB DB**: `klurigo_prod`
+- **Uploads Volume**: `prod-quiz-service-uploads-volume`
 
 ## 🔐 Required Secrets
 
-This stack requires the following environment secrets:
+Set these in Portainer or your environment before deploying:
 
 ```env
 REDIS_PASSWORD=<YOUR_REDIS_PASSWORD>
@@ -28,7 +45,9 @@ PEXELS_API_KEY=<YOUR_PEXELS_API_KEY>
 
 ## 📁 Files
 
-- `docker-compose.yaml`: Defines the quiz service container, volume for uploads, and network settings.
+- `docker-compose.beta.yaml`: For beta deployments
+- `docker-compose.prod.yaml`: For production deployments
+- `stack.env`: Common environment variables shared between variants
 
 ## 🛠 Portainer GitOps Configuration
 
