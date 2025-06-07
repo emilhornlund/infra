@@ -1,6 +1,6 @@
 services:
   prod-quiz-service:
-    image: emils-nuc-server:5000/quiz-service:cf06c65
+    image: emils-nuc-server:5000/quiz-service:c9af423
     container_name: prod-quiz-service
     restart: unless-stopped
     env_file:
@@ -14,11 +14,9 @@ services:
       - prod-quiz-service-uploads-volume:/uploads
     networks:
       - core-network
-
 volumes:
   prod-quiz-service-uploads-volume:
     name: prod-quiz-service-uploads-volume
-
 networks:
   core-network:
     external: true

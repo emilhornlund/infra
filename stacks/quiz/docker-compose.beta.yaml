@@ -1,0 +1,17 @@
+services:
+  beta-quiz:
+    image: emils-nuc-server:5000/quiz:c9af423
+    container_name: beta-quiz
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      QUIZ_SERVICE_PROXY: http://beta-quiz-service:8080/api
+      QUIZ_SERVICE_IMAGES_PROXY: http://beta-quiz-service:8080/uploads/images
+      VIRTUAL_HOST: beta.klurigo.com
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: beta.klurigo.com
+    networks:
+      - core-network
+networks:
+  core-network:
+    external: true

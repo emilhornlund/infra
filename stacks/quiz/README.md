@@ -1,16 +1,29 @@
 # 🧠 Quiz Stack
 
-This stack deploys the frontend web application for the quiz game platform, built with React, Vite, and Storybook.
+This stack deploys the frontend web application for the quiz game platform, built with React, Vite, and Storybook. It now supports both beta and production deployments with distinct environment configurations.
 
 ## 🐳 Service Overview
 
-- **Image**: `192.168.0.65:9500/emilhornlund/quiz:<tag>`
+- **Image**: `emils-nuc-server:5000/quiz:<tag>`
 - **Port**: Exposes port `80` internally (proxied via nginx-proxy)
 - **Environment Variables**:
-  - `QUIZ_SERVICE_PROXY`: Internal API base URL pointing to `quiz-service`
-  - `QUIZ_SERVICE_IMAGES_PROXY`: Proxy path for uploaded image assets
-  - `VIRTUAL_HOST` and `LETSENCRYPT_HOST`: Used by `nginx-proxy` and `acme-companion` to expose the site over HTTPS
-- **Network**: Connected to `core-network` to communicate with backend and proxy
+  - `NODE_ENV`: Defines the deployment environment (`beta` or `production`)
+  - `QUIZ_SERVICE_PROXY`: Internal API base URL pointing to the appropriate `quiz-service`
+  - `QUIZ_SERVICE_IMAGES_PROXY`: Proxy path for image uploads
+  - `VIRTUAL_HOST` and `LETSENCRYPT_HOST`: Used by `nginx-proxy` and `acme-companion` for HTTPS routing
+- **Network**: Connected to `core-network` for internal service discovery
+
+## 🧪 Beta Deployment
+
+- **Compose file**: `docker-compose.beta.yaml`
+- **Virtual Host**: `beta.klurigo.com`
+- **API Proxy**: `http://beta-quiz-service:8080/api`
+
+## 🚀 Production Deployment
+
+- **Compose file**: `docker-compose.prod.yaml`
+- **Virtual Host**: `quiz.emilhornlund.com`, `klurigo.com`
+- **API Proxy**: `http://prod-quiz-service:8080/api`
 
 ## 🛠 Portainer GitOps Configuration
 
@@ -20,8 +33,8 @@ To deploy this stack with Portainer:
 - **Path**: `stacks/quiz`
 - **Auto Update**: Enable (interval or webhook)
 
-> Ensure the `core-network` and the `quiz-service` backend are up and accessible before deploying this stack.
+> Ensure `core-network` and the corresponding `quiz-service` backend are deployed and reachable.
 
 ---
 
-> The quiz frontend delivers a responsive, interactive game experience to players and hosts through a modern single-page application.
+> The quiz frontend delivers a responsive, interactive game experience for players and hosts through a modern single-page application.

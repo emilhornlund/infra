@@ -168,10 +168,11 @@ The backend API for a full-stack real-time quiz game platform.
 ### 🧠 [Quiz](./stacks/quiz)
 The frontend web interface for the quiz game platform, built with React and Vite.
 
-- Uses `emilhornlund/quiz` image
-- Communicates with the `quiz-service` backend over internal API
+- Uses `emils-nuc-server:5000/quiz` image
+- Supports `beta` and `production` deployments with separate configurations
+- Communicates with the corresponding `quiz-service` backend over internal API
 - Web interface exposed via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
-- Connected to `core-network` for service integration
+- Connected to `core-network` for service integration and discovery
 
 ### 🧱 [Redis](./stacks/redis)
 An in-memory key-value data store used by services like `quiz-service` for caching and pub/sub messaging.
