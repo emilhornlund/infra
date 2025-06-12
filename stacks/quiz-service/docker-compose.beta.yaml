@@ -5,11 +5,7 @@ services:
     restart: unless-stopped
     env_file:
       - stacks.env
-    environment:
-      NODE_ENV: production
-      SERVER_ALLOW_ORIGIN: https://beta.klurigo.com
-      REDIS_DB: 1
-      MONGODB_DB: klurigo_beta
+      - stacks.beta.env
     volumes:
       - beta-quiz-service-uploads-volume:/uploads
     networks:

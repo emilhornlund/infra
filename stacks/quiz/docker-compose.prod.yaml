@@ -3,13 +3,9 @@ services:
     image: emils-nuc-server:5000/quiz:3c06fe5
     container_name: prod-quiz
     restart: unless-stopped
-    environment:
-      NODE_ENV: production
-      QUIZ_SERVICE_PROXY: http://prod-quiz-service:8080/api
-      QUIZ_SERVICE_IMAGES_PROXY: http://prod-quiz-service:8080/uploads/images
-      VIRTUAL_HOST: quiz.emilhornlund.com,klurigo.com
-      VIRTUAL_PORT: 80
-      LETSENCRYPT_HOST: quiz.emilhornlund.com,klurigo.com
+    env_file:
+      - stacks.env
+      - stacks.prod.env
     networks:
       - core-network
 networks:

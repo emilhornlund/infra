@@ -5,11 +5,7 @@ services:
     restart: unless-stopped
     env_file:
       - stacks.env
-    environment:
-      NODE_ENV: production
-      SERVER_ALLOW_ORIGIN: https://quiz.emilhornlund.com,https://klurigo.com
-      REDIS_DB: 0
-      MONGODB_DB: klurigo_prod
+      - stacks.prod.env
     volumes:
       - prod-quiz-service-uploads-volume:/uploads
     networks:
