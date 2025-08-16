@@ -1,6 +1,6 @@
 services:
   prod-quiz-service:
-    image: emils-nuc-server:5000/quiz-service:9cfcdda
+    image: emils-nuc-server:5000/quiz-service:dc44068
     container_name: prod-quiz-service
     restart: unless-stopped
     env_file:
