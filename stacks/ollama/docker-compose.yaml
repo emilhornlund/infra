@@ -1,31 +1,40 @@
 services:
   ollama:
-    image: intelanalytics/ipex-llm-inference-cpp-xpu:latest
+    image: ipex_ollama:0.1.1
+    build:
+      dockerfile: ./Dockerfile
     container_name: ollama
     restart: unless-stopped
     devices:
       - /dev/dri:/dev/dri
-    group_add:
-      - "render"
-    privileged: true
-    shm_size: "16g"
-    mem_limit: "32g"
     environment:
-      OLLAMA_HOST: 0.0.0.0
+      DEVICE: iGPU 
       OLLAMA_NUM_GPU: "999"
-      ZES_ENABLE_SYSMAN: "1"
-      SYCL_CACHE_PERSISTENT: "1"
-      SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS: "1"
-      no_proxy: "localhost,127.0.0.1"
+      NO_PROXY: "localhost,127.0.0.1"
+      PATH: "/llm/ollama:$PATH"
+      ZES_ENABLE_SYSMAN: 1
+      SYCL_CACHE_PERSISTENT: 1
+      SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS: 1
+      ONEAPI_DEVICE_SELECTOR: "level_zero:0"
+      OLLAMA_KEEP_ALIVE: "12h"
+      OLLAMA_HOST: "0.0.0.0"
+      OLLAMA_NUM_PARALLEL: 1
+      OLLAMA_MODELS: "/models"
+      OLLAMA_NUM_CTX: 8192
+    ports:
+      - 11434:1143
     volumes:
-      - ollama-data-volume:/root/.ollama
+      - ollama-data-volume:/models
+      - ollama-logs-volume:/logs
     networks:
       - core-network
-    command: |
-      > bash -c "source /opt/intel/oneapi/setvars.sh && /llm/scripts/launch_ollama.sh serve"
+    healthcheck:
+      test: ollama --version || exit 1
+      interval: 60s
+    command: bash -c "/llm/ollama/ollama serve > /logs/ollama.log"
 
   openwebui:
-    image: ghcr.io/open-webui/open-webui:main
+    image: ghcr.io/open-webui/open-webui:v0.6.26
     container_name: openwebui
     restart: unless-stopped
     depends_on:
@@ -45,6 +54,8 @@ services:
 volumes:
   ollama-data-volume:
     name: ollama-data-volume
+  ollama-logs-volume:
+    name: ollama-logs-volume
   openwebui-data-volume:
     name: openwebui-data-volume
 
