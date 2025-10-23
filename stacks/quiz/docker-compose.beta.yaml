@@ -1,6 +1,6 @@
 services:
   beta-quiz:
-    image: emils-nuc-server:5000/quiz:0b2a85f00
+    image: emils-nuc-server:5000/quiz:c6a8634b2
     container_name: beta-quiz
     restart: unless-stopped
     env_file:
