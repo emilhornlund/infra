@@ -77,6 +77,17 @@ A lightweight NGINX-based API gateway that securely exposes backend services beh
 - Configurable via `API_KEY` environment secret
 - Integrated with `nginx-proxy` on `api.emilhornlund.com`
 
+### 📊 [Beszel](./stacks/beszel)
+A lightweight server monitoring solution with Docker stats, historical data, and alerts.
+
+- **Hub Service**: Web dashboard accessible via `beszel.emilhornlund.com` with HTTPS
+- **Agent Service**: Local monitoring agent with host networking for system metrics
+- **Container Monitoring**: Tracks CPU, memory, and network usage for Docker containers
+- **Data Persistence**: Hub configuration in `beszel-data-volume`, agent metrics in `beszel-agent-data-volume`
+- **Communication**: Unix socket volume for secure hub-agent communication
+- **Authentication**: Requires `TOKEN` and `PUBLIC_KEY` environment secrets for agent registration
+- **Connected to** `core-network` for nginx-proxy integration and service discovery
+
 ### 🌐 [Cloudflare DDNS](./stacks/cloudflare-ddns)
 A lightweight dynamic DNS updater that automatically syncs your public IP with Cloudflare-managed domains.
 

@@ -1,0 +1,43 @@
+services:
+  beszel:
+    image: henrygd/beszel:0.17.0
+    container_name: beszel
+    restart: unless-stopped
+    env_file: ./beszel.stack.env
+    ports:
+      - 29376:8090
+    volumes:
+      - beszel-data-volume:/beszel_data
+      - beszel-socket-volume:/beszel_socket
+    healthcheck:
+      test: ['CMD', '/beszel', 'health', '--url', 'http://localhost:8090']
+      start_period: 5s
+      interval: 120s
+    networks:
+      - core-network
+
+  beszel-agent:
+    image: henrygd/beszel-agent:0.17.0
+    container_name: beszel-agent
+    restart: unless-stopped
+    env_file: ./beszel-agent.stack.env
+    network_mode: host
+    volumes:
+      - beszel-agent-data-volume:/var/lib/beszel-agent
+      - beszel-socket-volume:/beszel_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    healthcheck:
+      test: ['CMD', '/agent', 'health']
+      interval: 120s
+
+volumes:
+  beszel-data-volume:
+    name: beszel-data-volume
+  beszel-agent-data-volume:
+    name: beszel-agent-data-volume
+  beszel-socket-volume:
+    name: beszel-socket-volume
+
+networks:
+  core-network:
+    external: true
