@@ -10,7 +10,6 @@ set -euo pipefail
 # 1) List all the Docker volumes you want to back up here:
 VOLUMES=(
   "acme-volume"
-  "fing-data-volume"
   "gh-runner-data-volume"
   "gh-tmp-runner-volume"
   "mongodb-data-volume"

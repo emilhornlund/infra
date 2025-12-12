@@ -84,15 +84,6 @@ A lightweight dynamic DNS updater that automatically syncs your public IP with C
 - Requires `CLOUDFLARE_API_TOKEN` for domain updates
 - Supports multiple domains via `DOMAINS` environment variable
 
-### 📡 [Fing Agent](./stacks/fing)
-A containerized Fing Agent for local network scanning and device monitoring.
-
-- Uses `fing/fing-agent` image
-- Runs with `NET_ADMIN` capability and `host` network mode for low-level access
-- Exposes port `44444`
-- Persists data in a named volume (`fing-data-volume`)
-- Ideal for discovering and tracking devices on your LAN
-
 ### 🏃‍♂️ [GitHub Runner](./stacks/github-runner)
 A self-hosted GitHub Actions runner container for automating CI/CD workflows.
 

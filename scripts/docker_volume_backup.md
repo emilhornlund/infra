@@ -132,7 +132,6 @@ Near the top, you will see a `VOLUMES=( ... )` array. Replace the placeholder na
 ```bash
 VOLUMES=(
   "acme-volume"
-  "fing-data-volume"
   "gh-runner-data-volume"
   "gh-tmp-runner-volume"
   "mongodb-data-volume"
@@ -179,7 +178,6 @@ You should see output similar to:
 
 ```
 Backing up volume 'acme-volume' → /mnt/nas/backup/docker/acme-volume_2025-06-05.tar.gz
-Backing up volume 'fing-data-volume' → /mnt/nas/backup/docker/fing-data-volume_2025-06-05.tar.gz
 ...
 Removing backups older than 14 days...
 All done.
