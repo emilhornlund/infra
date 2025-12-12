@@ -12,7 +12,7 @@ This stack provides a minimal NGINX-based API gateway to securely route traffic 
   - `/api/quiz-service/` → forwards to internal `quiz-service:8080`, requires valid API key in `X-API-Key` header
   - `/api_docs/quiz-service/` → public access to Swagger or API documentation
 
-## 🔐 Environment Secrets
+## 🔐 Required Secrets
 
 Make sure to configure the following in Portainer or your environment:
 
@@ -20,14 +20,19 @@ Make sure to configure the following in Portainer or your environment:
 API_KEY=<YOUR_SECRET_API_KEY>
 ```
 
+## 📁 Files
+
+- `docker-compose.yaml`: Defines the API gateway service
+- `nginx.conf.template`: NGINX configuration template with API key protection
+
 ## 🛠 Portainer GitOps Configuration
 
-- **Git Repository**: This repository’s URL
+- **Git Repository**: This repository's URL
 - **Path**: `stacks/api-gateway`
 - **Auto Update**: Enabled via interval or webhook
 - **Note**: Requires `core-network` to route traffic to backend services
 
-## 📄 Example Header for Protected Route
+## 📝 Usage Example
 
 ```
 GET /api/quiz-service/ HTTP/1.1
@@ -36,3 +41,7 @@ X-API-Key: <YOUR_SECRET_API_KEY>
 ```
 
 > Requests without a valid API key to protected paths will receive a `403 Forbidden` response.
+
+---
+
+> This API gateway provides secure, centralized access control for your backend services.

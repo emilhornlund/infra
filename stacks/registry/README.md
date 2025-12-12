@@ -14,7 +14,21 @@ This stack deploys a private Docker registry with HTTPS and basic authentication
   - `registry-data-volume` → `/var/lib/registry` – stores image layers and metadata
 - **Network**: Connected to `core-network` for integration with other services
 
-## 🔐 Configuration
+## 🔐 Required Secrets
+
+No secrets required for this stack (authentication handled via htpasswd file).
+
+## 📁 Files
+
+- `docker-compose.yaml`: Defines the private registry service with authentication and TLS support
+
+## 🛠 Portainer GitOps Configuration
+
+- **Git Repository**: This repository's URL
+- **Path**: `stacks/registry`
+- **Auto Update**: Enable (interval or webhook)
+
+## 📝 Configuration
 
 ### 1. Create Registry Credentials
 
@@ -89,12 +103,6 @@ sudo systemctl restart docker
 ```
 
 > The hostname used in `docker push` must match the certificate (e.g. `emils-nuc-server`).
-
-## 🛠 Portainer GitOps Configuration
-
-- **Git Repository**: This repository's URL
-- **Path**: `stacks/registry`
-- **Auto Update**: Enable (interval or webhook)
 
 ---
 

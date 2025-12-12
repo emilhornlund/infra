@@ -14,20 +14,26 @@ This stack deploys [Vaultwarden](https://github.com/dani-garcia/vaultwarden), a 
   - `VIRTUAL_HOST` / `LETSENCRYPT_HOST` / `VIRTUAL_PORT` — Used for reverse proxying with TLS
 - **Network**: Connected to `core-network` for integration with proxy and other services
 
-## 🛠 Portainer GitOps Configuration
+## 🔐 Required Secrets
 
-To deploy this stack with Portainer:
+No secrets required for this stack.
+
+## 📁 Files
+
+- `docker-compose.yaml`: Defines the Vaultwarden service with reverse proxy integration
+
+## 🛠 Portainer GitOps Configuration
 
 - **Git Repository**: This repository's URL
 - **Path**: `stacks/vaultwarden`
 - **Auto Update**: Enable (interval or webhook)
 
+## 📝 Security Notes
+
+- It's highly recommended to enable environment variables for SMTP, WebSocket support, and backup strategy depending on your usage
+- Use HTTPS with a domain name (already configured with `LETSENCRYPT_HOST`) for secure access
+
 > Ensure `core-network` and your reverse proxy (e.g. `nginx-proxy` and `acme-companion`) are set up before deploying this stack.
-
-## 🔐 Security Notes
-
-- It's highly recommended to enable environment variables for SMTP, WebSocket support, and backup strategy depending on your usage.
-- Use HTTPS with a domain name (already configured with `LETSENCRYPT_HOST`) for secure access.
 
 ---
 

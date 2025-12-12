@@ -12,22 +12,29 @@ This stack deploys a [GitHub Actions self-hosted runner](https://github.com/myou
   - `gh-tmp-runner-volume` → `/tmp/runner` – working directory for job execution
 - **Environment File**: Uses `stack.env` to define required runner settings
 
-## 🔐 Required Secret
+## 🔐 Required Secrets
 
 To register with GitHub, this stack requires a **GitHub Personal Access Token (PAT)**:
 
 ```env
 ACCESS_TOKEN=<YOUR_GITHUB_PAT>
-````
+```
 
 > This token must be added in Portainer as an **environment secret** for the stack to deploy properly.
 
 ## 📁 Files
 
-* `docker-compose.yaml`: Defines the GitHub Actions runner container.
-* `stack.env`: Contains environment variables like repo URL, runner name, and working directory.
+- `docker-compose.yaml`: Defines the GitHub Actions runner container
+- `stack.env`: Contains environment variables like repo URL, runner name, and working directory
 
-## ⚙️ Key Configuration (`stack.env`)
+## 🛠 Portainer GitOps Configuration
+
+- **Git Repository**: This repository's URL
+- **Path**: `stacks/github-runner`
+- **Auto Update**: Enable (interval or webhook)
+- **Environment Secret**: Add `ACCESS_TOKEN` with your GitHub PAT
+
+## 📝 Key Configuration (`stack.env`)
 
 ```env
 REPO_URL=https://github.com/emilhornlund/quiz
@@ -38,15 +45,6 @@ DISABLE_AUTOMATIC_DEREGISTRATION=true
 RUNNER_SCOPE=repo
 LABELS=self-hosted
 ```
-
-## 🛠 Portainer GitOps Configuration
-
-To deploy this stack with Portainer:
-
-* **Git Repository**: This repository's URL
-* **Path**: `stacks/github-runner`
-* **Auto Update**: Enable (interval or webhook)
-* **Environment Secret**: Add `ACCESS_TOKEN` with your GitHub PAT
 
 ---
 

@@ -23,17 +23,15 @@ MONGO_INITDB_ROOT_PASSWORD=password
 
 ## 📁 Files
 
-* `docker-compose.yaml`: Defines the MongoDB service, volume, and external network.
-- No `stack.env` file is needed — secrets are passed via Portainer.
+- `docker-compose.yaml`: Defines the MongoDB service, volume, and external network
+- No `stack.env` file is needed — secrets are passed via Portainer
 
 ## 🛠 Portainer GitOps Configuration
 
-To deploy this stack with Portainer:
-
-* **Git Repository**: This repository's URL
-* **Path**: `stacks/mongodb`
-* **Auto Update**: Enable (interval or webhook)
-* **Environment Secrets**: Add `MONGO_INITDB_ROOT_USERNAME` and `MONGO_INITDB_ROOT_PASSWORD`
+- **Git Repository**: This repository's URL
+- **Path**: `stacks/mongodb`
+- **Auto Update**: Enable (interval or webhook)
+- **Environment Secrets**: Add `MONGO_INITDB_ROOT_USERNAME` and `MONGO_INITDB_ROOT_PASSWORD`
 
 > Ensure the `core-network` exists in Docker or is created manually before deployment.
 

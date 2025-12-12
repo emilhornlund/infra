@@ -12,7 +12,7 @@ This stack deploys a Redis 8 instance using Docker Compose and Portainer GitOps,
 - **Command Override**:
   - Starts Redis with `--requirepass` using a password defined via environment secret
 
-## 🔐 Required Secret
+## 🔐 Required Secrets
 
 This stack requires the following environment secret:
 
@@ -24,11 +24,9 @@ REDIS_PASSWORD=<YOUR_REDIS_PASSWORD>
 
 ## 📁 Files
 
-- `docker-compose.yaml`: Defines the Redis container, volumes, and network.
+- `docker-compose.yaml`: Defines the Redis container, volumes, and network
 
 ## 🛠 Portainer GitOps Configuration
-
-To deploy this stack with Portainer:
 
 - **Git Repository**: This repository's URL
 - **Path**: `stacks/redis`

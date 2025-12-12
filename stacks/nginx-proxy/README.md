@@ -27,13 +27,23 @@ CLOUDFLARE_EMAIL=you@example.com
 CLOUDFLARE_KEY=your_cloudflare_global_api_key
 ```
 
-These must be defined in Portainer as environment secrets.
+> These must be defined in Portainer as environment secrets.
 
 ## 📁 Files
-- `docker-compose.yaml`: Defines the proxy and companion services, named volumes, and external network.
-- No `.env` file is needed — secrets are passed via Portainer.
 
-## ⚙️ Usage
+- `docker-compose.yaml`: Defines the proxy and companion services, named volumes, and external network
+- No `.env` file is needed — secrets are passed via Portainer
+
+## 🛠 Portainer GitOps Configuration
+
+- **Git Repository**: This repository's URL
+- **Path**: `stacks/nginx-proxy`
+- **Auto Update**: Enable (interval or webhook)
+- **Environment Secrets**:
+  - `CLOUDFLARE_EMAIL`
+  - `CLOUDFLARE_KEY`
+
+## 📝 Usage
 
 To automatically proxy another container:
 
@@ -46,18 +56,6 @@ To automatically proxy another container:
   ```
 
 Certificates will be automatically issued and renewed using Cloudflare DNS-01 validation.
-
-## 🛠 Portainer GitOps Configuration
-
-To deploy this stack with Portainer:
-
-- **Git Repository**: This repository's URL
-- **Path**: `stacks/nginx-proxy`
-- **Auto Update**: Enable (interval or webhook)
-- **Environment Secrets**:
-
-  - `CLOUDFLARE_EMAIL`
-  - `CLOUDFLARE_KEY`
 
 > Make sure the `core-network` exists before deploying the stack.
 

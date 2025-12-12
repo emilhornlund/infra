@@ -12,9 +12,15 @@ This stack deploys the [Portainer Community Edition](https://www.portainer.io/) 
 - **Proxy Support**: Accessible via `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
 - **Network**: Connected to external `core-network`
 
-## 🛠 Portainer GitOps Configuration
+## 🔐 Required Secrets
 
-To deploy this stack with Portainer:
+No secrets required for this stack.
+
+## 📁 Files
+
+- `docker-compose.yaml`: Defines the Portainer service with Docker socket access and data persistence
+
+## 🛠 Portainer GitOps Configuration
 
 - **Git Repository**: This repository's URL
 - **Path**: `stacks/portainer`

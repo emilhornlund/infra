@@ -18,15 +18,21 @@ This stack deploys a self-hosted WireGuard VPN server using Docker Compose and P
   - `INTERNAL_SUBNET`: VPN address range (e.g., `10.13.13.0`)
 - **Network**: Connected to `core-network` for service discovery (e.g., Pi-hole)
 
+## 🔐 Required Secrets
+
+No secrets required for this stack.
+
+## 📁 Files
+
+- `docker-compose.yaml`: Defines the WireGuard VPN server with proper capabilities and networking
+
 ## 🛠 Portainer GitOps Configuration
 
 - **Git Repository**: This repository's URL
 - **Path**: `stacks/wireguard`
 - **Auto Update**: Enable (interval or webhook)
 
-> Ensure `core-network` is created before deployment.
-
-## 🧾 Client Configuration
+## 📝 Client Configuration
 
 Once the container is running, retrieve the peer config:
 
@@ -41,6 +47,8 @@ docker exec -it wireguard cat /config/peer1/peer1.png
 ```
 
 > Import the `.conf` file into the WireGuard desktop client or scan the QR code with the mobile app.
+
+> Ensure `core-network` is created before deployment.
 
 ---
 

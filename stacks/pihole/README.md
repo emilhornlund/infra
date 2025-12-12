@@ -13,7 +13,7 @@ This stack deploys [Pi-hole](https://pi-hole.net/) as a local DNS-level ad block
 - **Network**: Joins `core-network` with static IP `172.20.0.8`
 - **Proxy Support**: Exposes HTTP interface via `VIRTUAL_HOST` and `LETSENCRYPT_HOST` for use with nginx-proxy
 
-## 🔐 Required Secret
+## 🔐 Required Secrets
 
 To set the Pi-hole web interface password, define the following environment secret:
 
@@ -21,11 +21,13 @@ To set the Pi-hole web interface password, define the following environment secr
 PIHOLE_PASSWORD=your_admin_password
 ```
 
-This must be added as an environment secret in Portainer.
+> This must be added as an environment secret in Portainer.
+
+## 📁 Files
+
+- `docker-compose.yaml`: Defines the Pi-hole service, volumes, and network configuration
 
 ## 🛠 Portainer GitOps Configuration
-
-To deploy this stack with Portainer:
 
 - **Git Repository**: This repository's URL
 - **Path**: `stacks/pihole`

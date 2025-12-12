@@ -18,7 +18,7 @@ This stack deploys [Plex Media Server](https://www.plex.tv/), a self-hosted plat
   - `TZ`, `PUID`, `PGID` — Local timezone and permissions
 - **Network**: Connected to `core-network`
 
-## 🔐 Optional Secret
+## 🔐 Optional Secrets
 
 ```env
 PLEX_CLAIM=<YOUR_OPTIONAL_PLEX_CLAIM>
@@ -26,13 +26,17 @@ PLEX_CLAIM=<YOUR_OPTIONAL_PLEX_CLAIM>
 
 > You can obtain a claim token at [https://www.plex.tv/claim](https://www.plex.tv/claim) to register the server with your account.
 
+## 📁 Files
+
+- `docker-compose.yaml`: Defines the Plex Media Server service with GPU acceleration
+
 ## 🛠 Portainer GitOps Configuration
 
-- **Git Repository**: This repository’s URL
+- **Git Repository**: This repository's URL
 - **Path**: `stacks/plex`
 - **Auto Update**: Enable (interval or webhook)
 
-## 🖥 Hardware Acceleration
+## 📝 Hardware Acceleration
 
 To enable hardware transcoding, ensure:
 

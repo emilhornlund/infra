@@ -23,23 +23,32 @@ This stack deploys a fully self-hosted LLM inference backend (`Ollama`) paired w
   - Proxy configuration using `VIRTUAL_HOST`, `VIRTUAL_PORT`, `LETSENCRYPT_HOST`
 - **Data**: User interface state stored in `openwebui-data-volume`
 
-## 🔐 Domain & Proxy
-Make sure to have `ollama.emilhornlund.com` configured and reachable through your reverse proxy setup. HTTPS is automatically handled via Let's Encrypt.
+## 🔐 Required Secrets
+
+No secrets required for this stack.
+
+## 📁 Files
+
+- `docker-compose.yaml`: Defines both Ollama and Open WebUI services
+- `Dockerfile`: Custom build configuration for Intel GPU support
 
 ## 🛠 Portainer GitOps Configuration
-- **Git Repository**: This repository’s URL
+
+- **Git Repository**: This repository's URL
 - **Path**: `stacks/ollama`
 - **Auto Update**: Enabled via interval or webhook
 - **Note**: Requires `core-network` to be created beforehand
 
-## 📦 Volumes
-- `ollama-data-volume`: Model weights and cache
-- `openwebui-data-volume`: Web UI user data
+## 📝 Hardware Requirements
 
-## ⚙️ Hardware Requirements
 - Intel GPU with Level Zero support
 - `/dev/dri` exposed and configured correctly
 - Host must support Intel oneAPI stack
+
+## 📦 Volumes
+
+- `ollama-data-volume`: Model weights and cache
+- `openwebui-data-volume`: Web UI user data
 
 ---
 
