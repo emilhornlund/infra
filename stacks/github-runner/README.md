@@ -8,8 +8,8 @@ This stack deploys a [GitHub Actions self-hosted runner](https://github.com/myou
 - **Network Mode**: `host`
 - **Volume Mounts**:
   - `/var/run/docker.sock` – allows Docker-in-Docker (for container jobs)
-  - `gh-runner-data-volume` → `/runner/data` – stores runner config and state
-  - `gh-tmp-runner-volume` → `/tmp/runner` – working directory for job execution
+  - `klurigo-gh-runner-data-volume` → `/runner/data` – stores runner config and state
+  - `klurigo-gh-tmp-runner-volume` → `/tmp/runner` – working directory for job execution
 - **Environment File**: Uses `stack.env` to define required runner settings
 
 ## 🔐 Required Secrets
@@ -37,8 +37,8 @@ ACCESS_TOKEN=<YOUR_GITHUB_PAT>
 ## 📝 Key Configuration (`stack.env`)
 
 ```env
-REPO_URL=https://github.com/emilhornlund/quiz
-RUNNER_NAME=quiz-docker-runner-1
+REPO_URL=https://github.com/emilhornlund/klurigo
+RUNNER_NAME=klurigo-docker-runner-1
 RUNNER_WORKDIR=/tmp/runner/work
 CONFIGURED_ACTIONS_RUNNER_FILES_DIR=/runner/data
 DISABLE_AUTOMATIC_DEREGISTRATION=true
