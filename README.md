@@ -72,8 +72,8 @@ A lightweight NGINX-based API gateway that securely exposes backend services beh
 - Uses `nginx:alpine` with dynamic configuration via `envsubst`
 - Protects service endpoints using an `X-API-Key` header
 - Routes:
-  - `/api/quiz-service/` → `quiz-service` backend (requires valid API key)
-  - `/api_docs/quiz-service/` → API documentation (public)
+  - `/api/klurigo-service/` → `klurigo-service` backend (requires valid API key)
+  - `/api_docs/klurigo-service/` → API documentation (public)
 - Configurable via `API_KEY` environment secret
 - Integrated with `nginx-proxy` on `api.emilhornlund.com`
 
@@ -99,7 +99,7 @@ A lightweight dynamic DNS updater that automatically syncs your public IP with C
 A self-hosted GitHub Actions runner container for automating CI/CD workflows.
 
 - Uses `myoung34/github-runner`
-- Executes jobs for the `quiz` repository
+- Executes jobs for the `klurigo` repository
 - Requires a GitHub PAT as an environment secret
 
 ### 🍃 [MongoDB](./stacks/mongodb)
@@ -157,27 +157,27 @@ A web-based management UI for Docker environments.
 - Stores configuration in the `portainer-data-volume` named volume
 - Connected to `core-network` for integrated reverse proxy access
 
-### 🧠 [Quiz Service](./stacks/quiz-service)
-The backend API for a full-stack real-time quiz game platform.
+### 🧠 [Klurigo Service](./stacks/klurigo-service)
+The backend API for a full-stack real-time Klurigo game platform.
 
-- Uses `emils-nuc-server:5000/quiz-service` image
+- Uses `emils-nuc-server:5000/klurigo-service` image
 - Supports both `beta` and `production` deployments
 - Connects to Redis and MongoDB with isolated DBs per environment
-- Stores uploads in dedicated volumes (`beta-quiz-service-uploads-volume`, `prod-quiz-service-uploads-volume`)
+- Stores uploads in dedicated volumes (`beta-klurigo-service-uploads-volume`, `prod-klurigo-service-uploads-volume`)
 - Requires secrets for Redis, MongoDB, JWT auth, and Pexels API
 - Connected to `core-network` for service discovery and routing
 
-### 🧠 [Quiz](./stacks/quiz)
-The frontend web interface for the quiz game platform, built with React and Vite.
+### 🧠 [Klurigo Web](./stacks/klurigo-web)
+The frontend web interface for the Klurigo game platform, built with React and Vite.
 
-- Uses `emils-nuc-server:5000/quiz` image
+- Uses `emils-nuc-server:5000/klurigo` image
 - Supports `beta` and `production` deployments with separate configurations
-- Communicates with the corresponding `quiz-service` backend over internal API
+- Communicates with the corresponding `klurigo-service` backend over internal API
 - Web interface exposed via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
 - Connected to `core-network` for service integration and discovery
 
 ### 🧱 [Redis](./stacks/redis)
-An in-memory key-value data store used by services like `quiz-service` for caching and pub/sub messaging.
+An in-memory key-value data store used by services like `klurigo-service` for caching and pub/sub messaging.
 
 - Uses `redis` image
 - Exposes port `6379` for Redis clients

@@ -9,8 +9,8 @@ This stack provides a minimal NGINX-based API gateway to securely route traffic 
 - **Exposed At**: `api.emilhornlund.com` via `nginx-proxy` and Let's Encrypt
 - **Dynamic Config**: Uses `envsubst` to inject `API_KEY` into NGINX template
 - **Routes**:
-  - `/api/quiz-service/` → forwards to internal `quiz-service:8080`, requires valid API key in `X-API-Key` header
-  - `/api_docs/quiz-service/` → public access to Swagger or API documentation
+  - `/api/klurigo-service/` → forwards to internal `klurigo-service:8080`, requires valid API key in `X-API-Key` header
+  - `/api_docs/klurigo-service/` → public access to Swagger or API documentation
 
 ## 🔐 Required Secrets
 

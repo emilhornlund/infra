@@ -10,8 +10,12 @@ set -euo pipefail
 # 1) List all the Docker volumes you want to back up here:
 VOLUMES=(
   "acme-volume"
-  "gh-runner-data-volume"
-  "gh-tmp-runner-volume"
+  "beszel-agent-data-volume"
+  "beszel-data-volume"
+  "beszel-socket-volume"
+  "beta-klurigo-service-uploads-volume"
+  "klurigo-gh-runner-data-volume"
+  "klurigo-gh-runner-tmp-volume"
   "mongodb-data-volume"
   "nginx-proxy-certs-volume"
   "nginx-proxy-html-volume"
@@ -19,7 +23,7 @@ VOLUMES=(
   "pihole-dnsmasq-volume"
   "pihole-etc-volume"
   "portainer-data-volume"
-  "quiz-service-uploads-volume"
+  "prod-klurigo-service-uploads-volume"
   "redis-data-volume"
   "registry-auth-volume"
   "registry-certs-volume"

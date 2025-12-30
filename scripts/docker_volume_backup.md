@@ -132,8 +132,12 @@ Near the top, you will see a `VOLUMES=( ... )` array. Replace the placeholder na
 ```bash
 VOLUMES=(
   "acme-volume"
-  "gh-runner-data-volume"
-  "gh-tmp-runner-volume"
+  "beszel-agent-data-volume"
+  "beszel-data-volume"
+  "beszel-socket-volume"
+  "beta-klurigo-service-uploads-volume"
+  "klurigo-gh-runner-data-volume"
+  "klurigo-gh-runner-tmp-volume"
   "mongodb-data-volume"
   "nginx-proxy-certs-volume"
   "nginx-proxy-html-volume"
@@ -141,7 +145,7 @@ VOLUMES=(
   "pihole-dnsmasq-volume"
   "pihole-etc-volume"
   "portainer-data-volume"
-  "quiz-service-uploads-volume"
+  "prod-klurigo-service-uploads-volume"
   "redis-data-volume"
   "registry-auth-volume"
   "registry-certs-volume"
