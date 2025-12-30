@@ -151,7 +151,6 @@ VOLUMES=(
   "registry-certs-volume"
   "registry-data-volume"
   "vaultwarden-data-volume"
-  "wireguard-config-volume"
 )
 ```
 

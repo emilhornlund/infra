@@ -29,7 +29,6 @@ VOLUMES=(
   "registry-certs-volume"
   "registry-data-volume"
   "vaultwarden-data-volume"
-  "wireguard-config-volume"
 )
 
 # 2) Destination directory on the NAS (make sure it's mounted):
