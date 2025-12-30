@@ -1,0 +1,19 @@
+services:
+  prod-klurigo-web:
+    image: emils-nuc-server:5000/quiz:eb01895b4
+    container_name: prod-klurigo-web
+    restart: unless-stopped
+    env_file:
+      - stacks.env
+      - stacks.prod.env
+    networks:
+      - core-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -T 5 -qO- http://127.0.0.1 >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+networks:
+  core-network:
+    external: true
