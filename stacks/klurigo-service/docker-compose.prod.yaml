@@ -1,6 +1,6 @@
 services:
   prod-klurigo-service:
-    image: emils-nuc-server:5000/klurigo-service:a65bc53eb
+    image: emils-nuc-server:5000/klurigo-service:19e8d27d78
     container_name: prod-klurigo-service
     restart: unless-stopped
     env_file:
