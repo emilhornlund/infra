@@ -1,0 +1,9 @@
+# Location context
+proxy_request_buffering off;
+proxy_buffering off;
+
+proxy_read_timeout 300s;
+proxy_send_timeout 300s;
+
+# Optional: debug header to confirm _location include
+add_header X-Nginx-Proxy-Loc "beta.klurigo.com_location" always;
