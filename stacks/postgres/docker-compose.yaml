@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:14.21-trixie
+    container_name: postgres
+    hostname: postgres
+    restart: unless-stopped
+    ports:
+      - "15432:5432"
+    env_file: ./stack.env
+    volumes:
+      - postgres-data-volume:/var/lib/postgresql/data/
+    networks:
+      - core-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p 5432 -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    hostname: pgadmin
+    restart: unless-stopped
+    ports:
+      - "15433:80"
+    env_file: ./stack.env
+    depends_on:
+      - postgres
+    networks:
+      - core-network
+    volumes:
+      - pgadmin-data-volume:/var/lib/pgadmin/
+    healthcheck:
+      test: ["CMD-SHELL", "wget -T 5 -qO- http://127.0.0.1 >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+networks:
+  core-network:
+    external: true
+
+volumes:
+  postgres-data-volume:
+    name: postgres-data-volume
+  pgadmin-data-volume:
+    name: pgadmin-data-volume

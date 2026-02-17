@@ -139,6 +139,16 @@ A local DNS-level ad blocker for network-wide ad and tracker filtering.
 - Web interface proxied via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
 - Admin password set using the `PIHOLE_PASSWORD` environment secret
 
+### 🐘 [PostgreSQL](./stacks/postgres)
+A powerful open-source relational database with pgAdmin 4 web interface for management.
+
+- Uses `postgres:14.21-trixie` and `dpage/pgadmin4` images
+- PostgreSQL exposed on port `15432`, pgAdmin web interface on `15433`
+- Requires environment secrets: `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`, `PGADMIN_DEFAULT_EMAIL`, and `PGADMIN_DEFAULT_PASSWORD`
+- Persists database data in `postgres-data-volume` and pgAdmin config in `pgadmin-data-volume`
+- Connected to `core-network` for service-to-service communication
+- Health checks enabled for both services to ensure availability
+
 ### 📺 [Plex](./stacks/plex)
 A self-hosted media server for streaming movies, TV shows, and personal content across your devices.
 
