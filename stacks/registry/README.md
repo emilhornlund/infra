@@ -1,11 +1,13 @@
 # 📦 Private Docker Registry Stack
 
-This stack deploys a private Docker registry with HTTPS and basic authentication using Docker Compose and Portainer GitOps.
+This stack deploys a private Docker registry with HTTPS and basic authentication, along with a web-based browser interface for exploring images and tags, using Docker Compose and Portainer GitOps.
 
 ## 🐳 Service Overview
 
+### Docker Registry
+
 - **Image**: `registry:2`
-- **Port**: Exposes `5000` for pushing/pulling Docker images
+- **Port**: `5000:5000` (host:container)
 - **Authentication**: Uses `htpasswd`-based basic auth
 - **TLS**: Requires self-signed certificate and trusted CA
 - **Volumes**:
@@ -14,19 +16,53 @@ This stack deploys a private Docker registry with HTTPS and basic authentication
   - `registry-data-volume` → `/var/lib/registry` – stores image layers and metadata
 - **Network**: Connected to `core-network` for integration with other services
 
+### Registry Browser
+
+- **Image**: `klausmeyer/docker-registry-browser:1.9.1`
+- **Port**: `15713:15713` (host:container)
+- **Purpose**: Web interface for browsing Docker images and tags in the registry
+- **Environment**:
+  - `DOCKER_REGISTRY_URL=https://registry:5000`: Connects to the Docker registry
+  - `CA_FILE=/certs/emils-nuc-server.crt`: Uses the same CA for secure communication
+  - `TZ=Europe/Stockholm`: Sets timezone for logs and UI
+- **Volume**:
+  - `registry-certs-volume` → `/certs` (read-only) – shared TLS certificates
+- **Network**: Connected to `core-network` for registry access
+- **Health Check**: HTTP check on port 15713 to ensure web interface is responsive
+- **Dependencies**: Depends on the `registry` service
+
 ## 🔐 Required Secrets
 
-No secrets required for this stack (authentication handled via htpasswd file).
+To access the Registry Browser web interface, the following environment secrets are required:
+
+```env
+REGISTRY_BROWSER_SECRET_KEY_BASE=<YOUR_SECRET_KEY_BASE>
+REGISTRY_BROWSER_USER=<YOUR_REGISTRY_BROWSER_USERNAME>
+REGISTRY_BROWSER_PASSWORD=<YOUR_REGISTRY_BROWSER_PASSWORD>
+```
+
+> These must be added in Portainer as environment secrets for the stack to deploy properly.
 
 ## 📁 Files
 
-- `docker-compose.yaml`: Defines the private registry service with authentication and TLS support
+- `docker-compose.yaml`: Defines the Docker registry and browser services with authentication and TLS support
+- `stack.env`: Template file that references environment secrets from Portainer
 
 ## 🛠 Portainer GitOps Configuration
 
 - **Git Repository**: This repository's URL
 - **Path**: `stacks/registry`
 - **Auto Update**: Enable (interval or webhook)
+- **Environment Secrets**: Add `REGISTRY_BROWSER_SECRET_KEY_BASE`, `REGISTRY_BROWSER_USER`, and `REGISTRY_BROWSER_PASSWORD`
+
+> Ensure the `core-network` exists in Docker or is created manually before deployment.
+
+## 🔗 Access
+
+- **Docker Registry**: Push/pull images via `emils-nuc-server:5000` using the `htpasswd` credentials
+- **Registry Browser**: Access the web interface at `http://localhost:15713` using `REGISTRY_BROWSER_USER` and `REGISTRY_BROWSER_PASSWORD`
+
+The browser provides a convenient way to explore stored images, view tags, and inspect image metadata without using Docker CLI commands.
 
 ## 📝 Configuration
 
@@ -106,4 +142,4 @@ sudo systemctl restart docker
 
 ---
 
-> This setup provides a secure and private Docker image registry for internal development, CI/CD, and GitOps workflows.
+> This setup provides a secure and private Docker image registry with an intuitive web browser interface for internal development, CI/CD, and GitOps workflows.

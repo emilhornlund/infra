@@ -196,13 +196,15 @@ An in-memory key-value data store used by services like `klurigo-service` for ca
 - Connected to `core-network` for service-to-service communication
 
 ### 📦 [Private Docker Registry](./stacks/registry)
-A secure private registry for hosting Docker images with HTTPS and basic auth.
+A secure private registry for hosting Docker images with HTTPS and basic auth, plus a web-based browser interface.
 
-- Uses `registry` image
-- Exposes port `5000` for Docker push/pull
-- Requires custom TLS cert and CA trust
-- Stores credentials in `registry-auth-volume`
+- Uses `registry:2` and `klausmeyer/docker-registry-browser` images
+- Registry exposes port `5000` for Docker push/pull, browser on port `15713` for web UI
+- Requires custom TLS cert and CA trust for secure communication
+- Browser provides web interface for exploring images, tags, and metadata
+- Stores credentials in `registry-auth-volume`, shares certificates in `registry-certs-volume`
 - Persists images in `registry-data-volume`
+- Requires `REGISTRY_BROWSER_SECRET_KEY_BASE`, `REGISTRY_BROWSER_USER`, and `REGISTRY_BROWSER_PASSWORD` environment secrets
 - Connected to `core-network` for internal accessibility
 
 ### 🔐 [Vaultwarden](./stacks/vaultwarden)
