@@ -186,6 +186,16 @@ The frontend web interface for the Klurigo game platform, built with React and V
 - Web interface exposed via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
 - Connected to `core-network` for service integration and discovery
 
+### 📝 [Memos](./stacks/memos)
+A lightweight, self-hosted memo hub for capturing and sharing thoughts, powered by PostgreSQL.
+
+- Uses `neosmemo/memos:0.25.3` image
+- Web interface exposed on port `15330`, proxied via `nginx-proxy` at `memos.emilhornlund.com`
+- Requires `MEMOS_DSN` environment secret for PostgreSQL connection
+- Persists data in `memos-volume`
+- Supports markdown, tagging, and quick note capture
+- Connected to `core-network` for service integration and database access
+
 ### 🧱 [Redis](./stacks/redis)
 An in-memory key-value data store used by services like `klurigo-service` for caching and pub/sub messaging.
 
