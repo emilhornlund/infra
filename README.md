@@ -197,12 +197,13 @@ A lightweight, self-hosted memo hub for capturing and sharing thoughts, powered 
 - Connected to `core-network` for service integration and database access
 
 ### 🧱 [Redis](./stacks/redis)
-An in-memory key-value data store used by services like `klurigo-service` for caching and pub/sub messaging.
+An in-memory key-value data store used by services like `klurigo-service` for caching and pub/sub messaging, with a Redis Commander web interface for database management.
 
-- Uses `redis` image
-- Exposes port `6379` for Redis clients
+- Uses `redis:8.0.1` and `ghcr.io/joeferner/redis-commander:0.9.1` images
+- Redis exposes port `6379` for client connections, Redis Commander web UI on port `15428`
 - Requires `REDIS_PASSWORD` environment secret
 - Persists data in `redis-data-volume`
+- Redis Commander provides browsing access to all 16 Redis databases (db0–db15)
 - Connected to `core-network` for service-to-service communication
 
 ### 📦 [Private Docker Registry](./stacks/registry)

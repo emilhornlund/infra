@@ -17,6 +17,45 @@ services:
       retries: 5
       start_period: 10s
 
+  redis-commander:
+    image: ghcr.io/joeferner/redis-commander:0.9.1
+    container_name: redis-commander
+    hostname: redis-commander
+    restart: unless-stopped
+    user: redis
+    ports:
+      - "15428:80"
+    environment:
+      ADDRESS: 0.0.0.0
+      PORT: 80
+      REDIS_HOSTS: >
+        db0:redis:6379:0:${REDIS_PASSWORD},
+        db1:redis:6379:1:${REDIS_PASSWORD},
+        db2:redis:6379:2:${REDIS_PASSWORD},
+        db3:redis:6379:3:${REDIS_PASSWORD},
+        db4:redis:6379:4:${REDIS_PASSWORD},
+        db5:redis:6379:5:${REDIS_PASSWORD},
+        db6:redis:6379:6:${REDIS_PASSWORD},
+        db7:redis:6379:7:${REDIS_PASSWORD},
+        db8:redis:6379:8:${REDIS_PASSWORD},
+        db9:redis:6379:9:${REDIS_PASSWORD},
+        db10:redis:6379:10:${REDIS_PASSWORD},
+        db11:redis:6379:11:${REDIS_PASSWORD},
+        db12:redis:6379:12:${REDIS_PASSWORD},
+        db13:redis:6379:13:${REDIS_PASSWORD},
+        db14:redis:6379:14:${REDIS_PASSWORD},
+        db15:redis:6379:15:${REDIS_PASSWORD}
+    depends_on:
+      - redis
+    networks:
+      - core-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -T 5 -qO- http://127.0.0.1 >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
 volumes:
   redis-data-volume:
     name: redis-data-volume
