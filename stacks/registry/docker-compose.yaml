@@ -12,6 +12,7 @@ services:
       REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
       REGISTRY_HTTP_TLS_CERTIFICATE: /certs/emils-nuc-server.crt
       REGISTRY_HTTP_TLS_KEY: /certs/emils-nuc-server.key
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
     volumes:
       - registry-auth-volume:/auth
       - registry-certs-volume:/certs
