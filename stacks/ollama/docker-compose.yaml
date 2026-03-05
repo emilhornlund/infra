@@ -30,7 +30,10 @@ services:
       - core-network
     healthcheck:
       test: ollama --version || exit 1
-      interval: 60s
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
     command: bash -c "/llm/ollama/ollama serve > /logs/ollama.log"
 
   openwebui:
@@ -50,6 +53,12 @@ services:
       - openwebui-data-volume:/app/backend/data
     networks:
       - core-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -T 5 -qO- http://127.0.0.1:8080 >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
 volumes:
   ollama-data-volume:
