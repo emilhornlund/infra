@@ -17,12 +17,12 @@ services:
       SYCL_PI_LEVEL_ZERO_USE_IMMEDIATE_COMMANDLISTS: 1
       ONEAPI_DEVICE_SELECTOR: "level_zero:0"
       OLLAMA_KEEP_ALIVE: "12h"
-      OLLAMA_HOST: "0.0.0.0"
+      OLLAMA_HOST: "0.0.0.0:11434"
       OLLAMA_NUM_PARALLEL: 1
       OLLAMA_MODELS: "/models"
       OLLAMA_NUM_CTX: 8192
     ports:
-      - 11434:1143
+      - "11434:11434"
     volumes:
       - ollama-data-volume:/models
       - ollama-logs-volume:/logs
@@ -54,7 +54,7 @@ services:
     networks:
       - core-network
     healthcheck:
-      test: ["CMD-SHELL", "wget -T 5 -qO- http://127.0.0.1:8080 >/dev/null || exit 1"]
+      test: "unset http_proxy;unset https_proxy;/usr/bin/curl --noproxy --fail --silent http://localhost:8080/health | jq -ne 'input.status == true'"
       interval: 30s
       timeout: 5s
       retries: 3
