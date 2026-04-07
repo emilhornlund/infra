@@ -1,0 +1,47 @@
+services:
+  home-assistant:
+    image: homeassistant/home-assistant:2026.4.1
+    container_name: home-assistant
+    restart: unless-stopped
+    env_file: ./stack.env
+    volumes:
+      - home-assistant-config-volume:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    privileged: true
+    network_mode: host
+    healthcheck:
+      test: ["CMD-SHELL", "wget -T 5 -qO- http://127.0.0.1:8123 >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+
+  home-assistant-forwarder:
+    image: alpine/socat:1.8.0.3
+    container_name: home-assistant-forwarder
+    restart: unless-stopped
+    env_file: ./stack-proxy.env
+    command:
+      - "TCP-LISTEN:8123,fork,reuseaddr"
+      - "TCP:host.docker.internal:8123"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    expose:
+      - "8123"
+    networks:
+      - core-network
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 8123 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  home-assistant-config-volume:
+    name: home-assistant-config-volume
+
+networks:
+  core-network:
+    external: true
