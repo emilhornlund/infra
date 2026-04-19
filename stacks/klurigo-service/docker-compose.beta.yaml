@@ -1,6 +1,6 @@
 services:
   beta-klurigo-service:
-    image: emils-nuc-server:5000/klurigo-service:369eaa8707
+    image: emils-nuc-server:5000/klurigo-service:8f6cffdf7b
     container_name: beta-klurigo-service
     restart: unless-stopped
     env_file:
