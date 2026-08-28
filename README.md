@@ -65,11 +65,15 @@ Changes to Compose files in this repository will automatically trigger stack upd
 ## 🐳 Managed Images
 
 ### 🤖 [Agent Orchestrator Images](./images/agent-orchestrator)
-Docker image definitions for the shared Agent Orchestrator base, Node.js, and C++ toolchains.
+Docker images for running Agent Orchestrator with project-specific toolchains.
 
+- `agent-orchestrator-base` provides Ubuntu, Node.js, Yarn, Git, GitHub CLI, and OpenCode
+- `agent-orchestrator-node` extends the base image with Node.js project tooling and the compiled Agent Orchestrator application
+- `agent-orchestrator-cpp` extends the base image with C++/SDL tooling and the compiled Agent Orchestrator application
 - Builds are manually triggered through [GitHub Actions](./.github/workflows/agent-orchestrator-images.yml) on the repo-scoped infra runner
+- The workflow checks out both the `infra` and `agent-orchestrator` repositories and builds the orchestrator application into the Node.js and C++ images
 - Publishes versioned and `latest` tags to `emils-nuc-server:5000`
-- Builds the base image first, then uses it for the Node.js and C++ images
+- Project-specific configuration and persistent repository storage are supplied by the corresponding Portainer stack
 
 ## 📦 Managed Services
 

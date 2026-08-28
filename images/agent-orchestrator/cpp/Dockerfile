@@ -53,3 +53,13 @@ RUN ln -s /usr/bin/clang-22 /usr/local/bin/clang \
     && ln -s /usr/bin/clang++-22 /usr/local/bin/clang++ \
     && ln -s /usr/bin/clang-format-22 /usr/local/bin/clang-format \
     && ln -s /usr/bin/clang-tidy-22 /usr/local/bin/clang-tidy
+
+WORKDIR /opt/agent-orchestrator
+
+COPY agent-orchestrator/package.json agent-orchestrator/yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+COPY agent-orchestrator/ ./
+RUN yarn build
+
+CMD ["node", "dist/main.js"]
