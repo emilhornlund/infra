@@ -16,11 +16,33 @@ services:
     networks:
       - core-network
 
+  infra-gh-runner-1:
+    image: myoung34/github-runner:2.328.0
+    container_name: infra-gh-runner-1
+    restart: unless-stopped
+    env_file: ./stack.env
+    environment:
+      - REPO_URL=https://github.com/emilhornlund/infra
+      - RUNNER_NAME=infra-docker-runner-1
+      - LABELS=self-hosted,infra
+    security_opt:
+      - label:disable
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - infra-gh-runner-data-volume:/runner/data
+      - infra-gh-runner-tmp-volume:/tmp/runner
+    networks:
+      - core-network
+
 volumes:
   klurigo-gh-runner-data-volume:
     name: klurigo-gh-runner-data-volume
   klurigo-gh-runner-tmp-volume:
     name: klurigo-gh-runner-tmp-volume
+  infra-gh-runner-data-volume:
+    name: infra-gh-runner-data-volume
+  infra-gh-runner-tmp-volume:
+    name: infra-gh-runner-tmp-volume
 
 networks:
   core-network:

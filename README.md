@@ -62,6 +62,15 @@ Changes to Compose files in this repository will automatically trigger stack upd
 - Use meaningful commit messages to track configuration changes
 - Test changes locally using `docker-compose` before pushing
 
+## 🐳 Managed Images
+
+### 🤖 [Agent Orchestrator Images](./images/agent-orchestrator)
+Docker image definitions for the shared Agent Orchestrator base, Node.js, and C++ toolchains.
+
+- Builds are manually triggered through [GitHub Actions](./.github/workflows/agent-orchestrator-images.yml) on the repo-scoped infra runner
+- Publishes versioned and `latest` tags to `emils-nuc-server:5000`
+- Builds the base image first, then uses it for the Node.js and C++ images
+
 ## 📦 Managed Services
 
 This GitOps repository manages the following self-hosted services using Docker Compose and Portainer.
@@ -96,11 +105,13 @@ A lightweight dynamic DNS updater that automatically syncs your public IP with C
 - Supports multiple domains via `DOMAINS` environment variable
 
 ### 🏃‍♂️ [GitHub Runner](./stacks/github-runner)
-A self-hosted GitHub Actions runner container for automating CI/CD workflows.
+A pair of repo-scoped self-hosted GitHub Actions runner containers for automating CI/CD workflows.
 
-- Uses `myoung34/github-runner`
-- Executes jobs for the `klurigo` repository
-- Requires a GitHub PAT as an environment secret
+- Uses `myoung34/github-runner:2.328.0`
+- Runs the Klurigo repository runner with the `self-hosted` label
+- Runs the infra repository runner with the `self-hosted,infra` labels
+- The infra runner provides Docker socket access for manually building and pushing Agent Orchestrator images
+- Requires a GitHub PAT as the Portainer `ACCESS_TOKEN` environment secret
 
 ### 🍃 [MongoDB](./stacks/mongodb)
 A containerized MongoDB 8.0 instance for development and local service usage.
