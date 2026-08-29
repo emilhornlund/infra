@@ -23,6 +23,7 @@ services:
       - agent-orchestrator-rpg-sdl-opencode-config-volume:/root/.config/opencode
       - agent-orchestrator-rpg-sdl-opencode-data-volume:/root/.local/share/opencode
       - agent-orchestrator-rpg-sdl-logs-volume:/opt/agent-orchestrator/logs
+      - /home/emilhornlund/.config/agent-orchestrator/signing/id_ed25519:/run/secrets/agent-orchestrator-signing-key:ro
     networks:
       - isolated
 
@@ -43,6 +44,10 @@ configs:
             github: "emilhornlund/rpg-sdl"
             defaultBranch: "main"
             worktreeRoot: "/opt/.agent-worktrees/rpg-sdl"
+            gitIdentity:
+              name: "Agent Orchestrator"
+              email: "agent-orchestrator@users.noreply.github.com"
+              signingKey: "/run/secrets/agent-orchestrator-signing-key"
           opencode:
             timeoutMinutes: 360
             implementation:

@@ -33,6 +33,7 @@ services:
       - agent-orchestrator-klurigo-opencode-config-volume:/root/.config/opencode
       - agent-orchestrator-klurigo-opencode-data-volume:/root/.local/share/opencode
       - agent-orchestrator-klurigo-logs-volume:/opt/agent-orchestrator/logs
+      - /home/emilhornlund/.config/agent-orchestrator/signing/id_ed25519:/run/secrets/agent-orchestrator-signing-key:ro
     networks:
       - isolated
 
@@ -86,6 +87,10 @@ configs:
             worktreeRoot: "/opt/.agent-worktrees/klurigo"
             setupCommand: "yarn install --frozen-lockfile"
             validationCommand: "yarn build && yarn check-types && yarn lint && yarn workspace @klurigo/klurigo-service check-circular-deps && yarn test"
+            gitIdentity:
+              name: "Agent Orchestrator"
+              email: "agent-orchestrator@users.noreply.github.com"
+              signingKey: "/run/secrets/agent-orchestrator-signing-key"
           opencode:
             timeoutMinutes: 360
             implementation:
