@@ -7,7 +7,7 @@ services:
     environment:
       TZ: Europe/Stockholm
       MAINTENANCE_CRON: "0 3 * * *"
-      REGISTRY_HOST: emils-nuc-server:5000
+      REGISTRY_HOST: registry:5000
       REGISTRY_USER: ${REGISTRY_USER}
       REGISTRY_PASS: ${REGISTRY_PASS}
       KEEP_LAST: "4"
