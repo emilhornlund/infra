@@ -75,6 +75,19 @@ Docker images for running Agent Orchestrator with project-specific toolchains.
 - Publishes versioned and `latest` tags to `emils-nuc-server:5000`
 - Project-specific configuration and persistent repository storage are supplied by the corresponding Portainer stack
 
+### 🧹 [Infrastructure Maintenance](./images/maintenance)
+
+A lightweight maintenance image for scheduled cleanup of the private Docker registry and local Docker host.
+
+- Based on `docker:cli`
+- Includes a pinned `regctl` binary for private registry management
+- Includes the repository's `scripts/registry-cleanup.sh` at build time
+- Runs scheduled maintenance using `crond`
+- Removes old registry image tags according to the configured retention policy
+- Prunes unused local Docker images older than a configurable age
+- Published as `emils-nuc-server:5000/infra-maintenance`
+- Built manually through the `Build Maintenance Image` GitHub Actions workflow
+
 ## 📦 Managed Services
 
 This GitOps repository manages the following self-hosted services using Docker Compose and Portainer.
@@ -223,6 +236,18 @@ The frontend web interface for the Klurigo game platform, built with React and V
 - Communicates with the corresponding `klurigo-service` backend over internal API
 - Web interface exposed via `nginx-proxy` using `VIRTUAL_HOST` and `LETSENCRYPT_HOST`
 - Connected to `core-network` for service integration and discovery
+
+### 🧹 [Infrastructure Maintenance](./stacks/maintenance)
+
+A scheduled maintenance service for the local Docker host and private Docker registry.
+
+- Uses `emils-nuc-server:5000/infra-maintenance:latest`
+- Runs once per day by default at 03:00 Europe/Stockholm time
+- Removes old private-registry tags while retaining the configured number of recent tags
+- Prunes local Docker images that are unused and older than the configured retention period
+- Mounts `/var/run/docker.sock` to perform Docker host maintenance
+- Keeps registry credentials in Portainer environment secrets
+- Requires no repository-relative bind mounts, allowing deployment through Portainer GitOps
 
 ### 📝 [Memos](./stacks/memos)
 A lightweight, self-hosted memo hub for capturing and sharing thoughts, powered by PostgreSQL.

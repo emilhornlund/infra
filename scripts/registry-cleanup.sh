@@ -70,7 +70,7 @@ for repo in $repos; do
   echo "Deleting:"
   for tag in $del_tags; do
     echo "  - ${repo}:${tag}"
-    regctl --host "$HOSTCFG" tag delete "${REGISTRY_HOST}/${repo}:${tag}" || true
+    regctl --host "$HOSTCFG" tag delete "${REGISTRY_HOST}/${repo}:${tag}"
   done
   echo
 done

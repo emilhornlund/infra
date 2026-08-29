@@ -1,0 +1,58 @@
+name: Build Maintenance Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Optional image tag override
+        required: false
+        type: string
+
+jobs:
+  build:
+    runs-on: [self-hosted, infra]
+
+    env:
+      REGISTRY: emils-nuc-server:5000
+      IMAGE: infra-maintenance
+
+    steps:
+      - name: Check out infra repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Login to Private Docker Registry
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+
+      - name: Resolve image tag
+        id: tag
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+        shell: bash
+        run: |
+          if [ -n "$INPUT_TAG" ]; then
+            if [[ ! "$INPUT_TAG" =~ ^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$ ]]; then
+              echo "Invalid Docker image tag: $INPUT_TAG" >&2
+              exit 1
+            fi
+
+            printf 'value=%s\n' "$INPUT_TAG" >> "$GITHUB_OUTPUT"
+          else
+            printf 'value=%s\n' "${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build image
+        run: |
+          docker build \
+            -f images/maintenance/Dockerfile \
+            -t "$REGISTRY/$IMAGE:${{ steps.tag.outputs.value }}" \
+            -t "$REGISTRY/$IMAGE:latest" \
+            .
+
+      - name: Push image
+        run: |
+          docker push "$REGISTRY/$IMAGE:${{ steps.tag.outputs.value }}"
+          docker push "$REGISTRY/$IMAGE:latest"

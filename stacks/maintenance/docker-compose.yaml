@@ -1,0 +1,23 @@
+services:
+  maintenance:
+    image: emils-nuc-server:5000/infra-maintenance:latest
+    pull_policy: always
+    container_name: maintenance
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Stockholm
+      MAINTENANCE_CRON: "0 3 * * *"
+      REGISTRY_HOST: emils-nuc-server:5000
+      REGISTRY_USER: ${REGISTRY_USER}
+      REGISTRY_PASS: ${REGISTRY_PASS}
+      KEEP_LAST: "4"
+      REPOS_ALLOWLIST: >-
+        klurigo-service
+        klurigo-web
+        agent-orchestrator-base
+        agent-orchestrator-node
+        agent-orchestrator-cpp
+        infra-maintenance
+      DOCKER_IMAGE_MAX_AGE: "168h"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
