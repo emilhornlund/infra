@@ -88,7 +88,7 @@ configs:
             setupCommand: "yarn install --frozen-lockfile"
             validationCommand: "yarn build && yarn check-types && yarn lint && yarn workspace @klurigo/klurigo-service check-circular-deps && yarn test"
             gitIdentity:
-              name: "Agent Orchestrator"
+              name: "Emil Hörnlund"
               email: "10013373+emilhornlund@users.noreply.github.com"
               signingKey: "/run/secrets/agent-orchestrator-signing-key"
           opencode:

@@ -45,7 +45,7 @@ configs:
             defaultBranch: "main"
             worktreeRoot: "/opt/.agent-worktrees/rpg-sdl"
             gitIdentity:
-              name: "Agent Orchestrator"
+              name: "Emil Hörnlund"
               email: "10013373+emilhornlund@users.noreply.github.com"
               signingKey: "/run/secrets/agent-orchestrator-signing-key"
           opencode:
