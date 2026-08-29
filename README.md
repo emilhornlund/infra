@@ -92,6 +92,21 @@ A lightweight maintenance image for scheduled cleanup of the private Docker regi
 
 This GitOps repository manages the following self-hosted services using Docker Compose and Portainer.
 
+### 🤖 [Agent Orchestrator — agent-orchestrator](./stacks/agent-orchestrator-agent-orchestrator)
+
+A dedicated Agent Orchestrator deployment for the `emilhornlund/agent-orchestrator` repository.
+
+* Uses `emils-nuc-server:5000/agent-orchestrator-node:latest`
+* Runs the compiled Agent Orchestrator application with the Node.js toolchain required by the Agent Orchestrator repository
+* Automatically clones `emilhornlund/agent-orchestrator` into persistent repository storage on first startup
+* Installs dependencies using `yarn install --frozen-lockfile`
+* Validates changes using the production build, Prettier, ESLint, TypeScript, and Vitest
+* Persists Git worktrees, OpenCode configuration/authentication, and Agent Orchestrator logs in dedicated named Docker volumes
+* Uses a dedicated host-mounted Git signing key
+* Uses `GH_TOKEN` for GitHub CLI and Git authentication
+* Requires `TRELLO_API_KEY`, `TRELLO_TOKEN`, and `GH_TOKEN` as Portainer environment secrets
+* Stores the project-specific Agent Orchestrator configuration directly in the Compose stack
+
 ### 🤖 [Agent Orchestrator — klurigo](./stacks/agent-orchestrator-klurigo)
 A dedicated Agent Orchestrator deployment for the `emilhornlund/klurigo` repository.
 

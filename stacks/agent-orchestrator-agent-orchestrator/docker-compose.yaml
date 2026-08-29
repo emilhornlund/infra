@@ -1,0 +1,84 @@
+services:
+  agent-orchestrator-agent-orchestrator:
+    image: emils-nuc-server:5000/agent-orchestrator-node:latest
+    container_name: agent-orchestrator-agent-orchestrator
+    restart: unless-stopped
+    cpuset: "0-5"
+    cpus: 6.0
+    mem_limit: 12g
+    pids_limit: 2048
+    env_file: ./stack.env
+    command:
+      - /bin/sh
+      - -c
+      - |
+        gh auth setup-git
+        exec node dist/main.js
+    configs:
+      - source: agent-orchestrator-agent-orchestrator-config
+        target: /opt/agent-orchestrator/config.yaml
+    volumes:
+      - agent-orchestrator-agent-orchestrator-repository-volume:/opt/repositories
+      - agent-orchestrator-agent-orchestrator-worktrees-volume:/opt/.agent-worktrees/agent-orchestrator
+      - agent-orchestrator-agent-orchestrator-opencode-config-volume:/root/.config/opencode
+      - agent-orchestrator-agent-orchestrator-opencode-data-volume:/root/.local/share/opencode
+      - agent-orchestrator-agent-orchestrator-logs-volume:/opt/agent-orchestrator/logs
+      - /home/emilhornlund/.config/agent-orchestrator/signing/id_ed25519:/run/secrets/agent-orchestrator-signing-key:ro
+    networks:
+      - isolated
+
+configs:
+  agent-orchestrator-agent-orchestrator-config:
+    content: |
+      projects:
+        - id: "agent-orchestrator"
+          trello:
+            boardId: "6a88b3c2e23e58c7cc104249"
+            readyListId: "6a88b3d9733354362c893f46"
+            workingListId: "6a88b3f35bf125e5c0aef981"
+            reviewListId: "6a88b3fd1b31e847eaf56753"
+            failedListId: "6a88b40f09ed06635cc4fe01"
+            doneListId: "6a88b409f84d5688ae77d09d"
+          repository:
+            path: "/opt/repositories/agent-orchestrator"
+            github: "emilhornlund/agent-orchestrator"
+            defaultBranch: "main"
+            worktreeRoot: "/opt/.agent-worktrees/agent-orchestrator"
+            setupCommand: "yarn install --frozen-lockfile"
+            validationCommand: "yarn build && yarn format:check && yarn validate"
+            gitIdentity:
+              name: "Emil Hörnlund"
+              email: "10013373+emilhornlund@users.noreply.github.com"
+              signingKey: "/run/secrets/agent-orchestrator-signing-key"
+          opencode:
+            timeoutMinutes: 360
+            implementation:
+              model: "openai/gpt-5.6-luna"
+              variant: "xhigh"
+            review:
+              model: "openai/gpt-5.6-luna"
+              variant: "high"
+            remediation:
+              model: "openai/gpt-5.6-luna"
+              variant: "xhigh"
+            commit:
+              model: "openai/gpt-5.6-luna"
+              variant: "medium"
+      workflow:
+        pollIntervalSeconds: 15
+
+volumes:
+  agent-orchestrator-agent-orchestrator-repository-volume:
+    name: agent-orchestrator-agent-orchestrator-repository-volume
+  agent-orchestrator-agent-orchestrator-worktrees-volume:
+    name: agent-orchestrator-agent-orchestrator-worktrees-volume
+  agent-orchestrator-agent-orchestrator-opencode-config-volume:
+    name: agent-orchestrator-agent-orchestrator-opencode-config-volume
+  agent-orchestrator-agent-orchestrator-opencode-data-volume:
+    name: agent-orchestrator-agent-orchestrator-opencode-data-volume
+  agent-orchestrator-agent-orchestrator-logs-volume:
+    name: agent-orchestrator-agent-orchestrator-logs-volume
+
+networks:
+  isolated:
+    driver: bridge
