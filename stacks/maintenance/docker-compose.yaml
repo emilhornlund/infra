@@ -21,3 +21,9 @@ services:
       DOCKER_IMAGE_MAX_AGE: "168h"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - core-network
+
+networks:
+  core-network:
+    external: true
