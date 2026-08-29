@@ -18,6 +18,14 @@ docker image prune \
   --filter "until=${DOCKER_IMAGE_MAX_AGE:-168h}"
 
 echo
+echo "Pruning unused Docker build cache older than ${DOCKER_BUILD_CACHE_MAX_AGE:-168h}..."
+
+docker builder prune \
+  --all \
+  --force \
+  --filter "until=${DOCKER_BUILD_CACHE_MAX_AGE:-168h}"
+
+echo
 echo "Docker disk usage:"
 docker system df
 
