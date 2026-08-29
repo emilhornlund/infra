@@ -1,0 +1,119 @@
+services:
+  agent-orchestrator-klurigo:
+    image: emils-nuc-server:5000/agent-orchestrator-node:latest
+    container_name: agent-orchestrator-klurigo
+    restart: unless-stopped
+    cpuset: "0-5"
+    cpus: 6.0
+    mem_limit: 12g
+    pids_limit: 2048
+    env_file: ./stack.env
+    environment:
+      REDIS_HOST: klurigo-test-redis
+      REDIS_PORT: "6379"
+      MONGODB_HOST: klurigo-test-mongodb
+      MONGODB_PORT: "27017"
+    depends_on:
+      klurigo-test-redis:
+        condition: service_healthy
+      klurigo-test-mongodb:
+        condition: service_healthy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        gh auth setup-git
+        exec node dist/main.js
+    configs:
+      - source: agent-orchestrator-klurigo-config
+        target: /opt/agent-orchestrator/config.yaml
+    volumes:
+      - agent-orchestrator-klurigo-repository-volume:/opt/repositories
+      - agent-orchestrator-klurigo-worktrees-volume:/opt/.agent-worktrees/klurigo
+      - agent-orchestrator-klurigo-opencode-config-volume:/root/.config/opencode
+      - agent-orchestrator-klurigo-opencode-data-volume:/root/.local/share/opencode
+      - agent-orchestrator-klurigo-logs-volume:/opt/agent-orchestrator/logs
+    networks:
+      - isolated
+
+  klurigo-test-redis:
+    image: redis:8.0.1
+    container_name: klurigo-test-redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    networks:
+      - isolated
+
+  klurigo-test-mongodb:
+    image: mongo:8.0.9
+    container_name: klurigo-test-mongodb
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "--quiet",
+          "--eval",
+          "db.runCommand({ ping: 1 }).ok",
+        ]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    networks:
+      - isolated
+
+configs:
+  agent-orchestrator-klurigo-config:
+    content: |
+      projects:
+        - id: "klurigo"
+          trello:
+            boardId: "675177656f0438ee74443791"
+            readyListId: "6a8af0e3b8dfa5747672bc0b"
+            workingListId: "67517856a67e1803a9a0c418"
+            reviewListId: "6a8af0e707db7e942ded9516"
+            failedListId: "6a8af0eb5ecda68b600204cb"
+            doneListId: "67c7e46fdefd3ab0128fd35e"
+          repository:
+            path: "/opt/repositories/klurigo"
+            github: "emilhornlund/klurigo"
+            defaultBranch: "main"
+            worktreeRoot: "/opt/.agent-worktrees/klurigo"
+            validationCommand: "yarn build && yarn check-types && yarn lint && yarn workspace @klurigo/klurigo-service check-circular-deps && yarn test"
+          opencode:
+            timeoutMinutes: 360
+            implementation:
+              model: "openai/gpt-5.6-luna"
+              variant: "xhigh"
+            review:
+              model: "openai/gpt-5.6-luna"
+              variant: "high"
+            remediation:
+              model: "openai/gpt-5.6-luna"
+              variant: "xhigh"
+            commit:
+              model: "openai/gpt-5.6-luna"
+              variant: "medium"
+      workflow:
+        pollIntervalSeconds: 15
+
+volumes:
+  agent-orchestrator-klurigo-repository-volume:
+    name: agent-orchestrator-klurigo-repository-volume
+  agent-orchestrator-klurigo-worktrees-volume:
+    name: agent-orchestrator-klurigo-worktrees-volume
+  agent-orchestrator-klurigo-opencode-config-volume:
+    name: agent-orchestrator-klurigo-opencode-config-volume
+  agent-orchestrator-klurigo-opencode-data-volume:
+    name: agent-orchestrator-klurigo-opencode-data-volume
+  agent-orchestrator-klurigo-logs-volume:
+    name: agent-orchestrator-klurigo-logs-volume
+
+networks:
+  isolated:
+    driver: bridge

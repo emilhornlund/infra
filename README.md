@@ -79,6 +79,18 @@ Docker images for running Agent Orchestrator with project-specific toolchains.
 
 This GitOps repository manages the following self-hosted services using Docker Compose and Portainer.
 
+### 🤖 [Agent Orchestrator — klurigo](./stacks/agent-orchestrator-klurigo)
+A dedicated Agent Orchestrator deployment for the `emilhornlund/klurigo` repository.
+
+- Uses `emils-nuc-server:5000/agent-orchestrator-node:latest`
+- Runs the compiled Agent Orchestrator application with the Node.js toolchain required by Klurigo
+- Includes isolated Redis and MongoDB services for Klurigo tests
+- Automatically clones `emilhornlund/klurigo` into persistent repository storage on first startup
+- Persists Git worktrees, OpenCode configuration/authentication, and Agent Orchestrator logs in named Docker volumes
+- Uses `GH_TOKEN` for GitHub CLI and Git authentication
+- Requires `TRELLO_API_KEY`, `TRELLO_TOKEN`, and `GH_TOKEN` as Portainer environment secrets
+- Stores the project-specific Agent Orchestrator configuration directly in the Compose stack
+
 ### 🤖 [Agent Orchestrator — rpg-sdl](./stacks/agent-orchestrator-rpg-sdl)
 A dedicated Agent Orchestrator deployment for the `emilhornlund/rpg-sdl` repository.
 
