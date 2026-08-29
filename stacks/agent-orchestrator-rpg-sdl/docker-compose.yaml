@@ -46,7 +46,7 @@ configs:
             worktreeRoot: "/opt/.agent-worktrees/rpg-sdl"
             gitIdentity:
               name: "Agent Orchestrator"
-              email: "agent-orchestrator@users.noreply.github.com"
+              email: "10013373+emilhornlund@users.noreply.github.com"
               signingKey: "/run/secrets/agent-orchestrator-signing-key"
           opencode:
             timeoutMinutes: 360
