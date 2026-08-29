@@ -3,8 +3,8 @@ services:
     image: emils-nuc-server:5000/agent-orchestrator-cpp:latest
     container_name: agent-orchestrator-rpg-sdl
     restart: unless-stopped
-    cpuset: "0-7"
-    cpus: 8.0
+    cpuset: "0-5"
+    cpus: 6.0
     mem_limit: 12g
     pids_limit: 2048
     env_file: ./stack.env
