@@ -79,6 +79,17 @@ Docker images for running Agent Orchestrator with project-specific toolchains.
 
 This GitOps repository manages the following self-hosted services using Docker Compose and Portainer.
 
+### 🤖 [Agent Orchestrator — rpg-sdl](./stacks/agent-orchestrator-rpg-sdl)
+A dedicated Agent Orchestrator deployment for the `emilhornlund/rpg-sdl` repository.
+
+- Uses `emils-nuc-server:5000/agent-orchestrator-cpp:latest`
+- Runs the compiled Agent Orchestrator application with the C++/SDL toolchain
+- Automatically clones `emilhornlund/rpg-sdl` into persistent repository storage on first startup
+- Persists Git worktrees, OpenCode configuration/authentication, and Agent Orchestrator logs in named Docker volumes
+- Uses `GH_TOKEN` for GitHub CLI and Git authentication
+- Requires `TRELLO_API_KEY`, `TRELLO_TOKEN`, and `GH_TOKEN` as Portainer environment secrets
+- Stores the project-specific Agent Orchestrator configuration directly in the Compose stack
+
 ### 🚪 [API Gateway](./stacks/api-gateway)
 A lightweight NGINX-based API gateway that securely exposes backend services behind a unified domain.
 

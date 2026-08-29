@@ -1,0 +1,73 @@
+services:
+  agent-orchestrator-rpg-sdl:
+    image: emils-nuc-server:5000/agent-orchestrator-cpp:latest
+    container_name: agent-orchestrator-rpg-sdl
+    restart: unless-stopped
+    env_file: ./stack.env
+    command:
+      - /bin/sh
+      - -c
+      - |
+        gh auth setup-git
+        exec node dist/main.js
+    configs:
+      - source: agent-orchestrator-rpg-sdl-config
+        target: /opt/agent-orchestrator/config.yaml
+    volumes:
+      - agent-orchestrator-rpg-sdl-repository-volume:/opt/repositories
+      - agent-orchestrator-rpg-sdl-worktrees-volume:/opt/.agent-worktrees/rpg-sdl
+      - agent-orchestrator-rpg-sdl-opencode-config-volume:/root/.config/opencode
+      - agent-orchestrator-rpg-sdl-opencode-data-volume:/root/.local/share/opencode
+      - agent-orchestrator-rpg-sdl-logs-volume:/opt/agent-orchestrator/logs
+    networks:
+      - isolated
+
+configs:
+  agent-orchestrator-rpg-sdl-config:
+    content: |
+      projects:
+        - id: "rpg-sdl"
+          trello:
+            boardId: "6a183eaa979adc3c79bd095f"
+            readyListId: "6a886de923d8201c8dc6354f"
+            workingListId: "6a251e0aeeb9b58703aec548"
+            reviewListId: "6a886df67ee6877566c27b42"
+            failedListId: "6a88a3a78bd625f1bbfcc90e"
+            doneListId: "6a251e1069b2e1a737e5552a"
+          repository:
+            path: "/opt/repositories/rpg-sdl"
+            github: "emilhornlund/rpg-sdl"
+            defaultBranch: "main"
+            worktreeRoot: "/opt/.agent-worktrees/rpg-sdl"
+          opencode:
+            timeoutMinutes: 360
+            implementation:
+              model: "openai/gpt-5.6-luna"
+              variant: "xhigh"
+            review:
+              model: "openai/gpt-5.6-luna"
+              variant: "high"
+            remediation:
+              model: "openai/gpt-5.6-luna"
+              variant: "xhigh"
+            commit:
+              model: "openai/gpt-5.6-luna"
+              variant: "medium"
+      workflow:
+        pollIntervalSeconds: 15
+
+volumes:
+  agent-orchestrator-rpg-sdl-repository-volume:
+    name: agent-orchestrator-rpg-sdl-repository-volume
+  agent-orchestrator-rpg-sdl-worktrees-volume:
+    name: agent-orchestrator-rpg-sdl-worktrees-volume
+  agent-orchestrator-rpg-sdl-opencode-config-volume:
+    name: agent-orchestrator-rpg-sdl-opencode-config-volume
+  agent-orchestrator-rpg-sdl-opencode-data-volume:
+    name: agent-orchestrator-rpg-sdl-opencode-data-volume
+  agent-orchestrator-rpg-sdl-logs-volume:
+    name: agent-orchestrator-rpg-sdl-logs-volume
+
+networks:
+  isolated:
+    driver: bridge
