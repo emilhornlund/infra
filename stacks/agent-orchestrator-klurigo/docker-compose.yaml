@@ -84,6 +84,7 @@ configs:
             github: "emilhornlund/klurigo"
             defaultBranch: "main"
             worktreeRoot: "/opt/.agent-worktrees/klurigo"
+            setupCommand: "yarn install --frozen-lockfile"
             validationCommand: "yarn build && yarn check-types && yarn lint && yarn workspace @klurigo/klurigo-service check-circular-deps && yarn test"
           opencode:
             timeoutMinutes: 360
