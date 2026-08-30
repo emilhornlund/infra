@@ -8,6 +8,8 @@ services:
     mem_limit: 12g
     pids_limit: 2048
     env_file: ./stack.env
+    environment:
+      RPG_BUILD_JOBS: "6"
     command:
       - /bin/sh
       - -c

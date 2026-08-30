@@ -45,6 +45,14 @@ This ensures all services can join the same virtual network and communicate by c
 
 > You only need to do this once per host.
 
+## 🌡️ CPU Thermal Management
+
+The host is configured to disable Intel Turbo Boost to keep CPU-intensive Agent Orchestrator workloads within acceptable thermal limits.
+
+Build parallelism for CPU-heavy stacks is tuned alongside Docker CPU allocation.
+
+See [CPU Thermal Management](./docs/cpu-thermal-management.md) for the host configuration, verification commands, rollback steps, and workload-tuning guidance.
+
 ## 🚦 GitOps with Portainer
 
 Each stack is configured in Portainer as follows:
