@@ -17,12 +17,24 @@ fi
 echo
 echo "Running registry garbage collection..."
 
-if docker exec registry \
-  registry garbage-collect /etc/docker/registry/config.yml; then
+REGISTRY_IMAGE="$(docker inspect --format '{{.Config.Image}}' registry)"
+
+echo "Stopping registry for garbage collection..."
+docker stop registry >/dev/null
+
+if docker run --rm \
+  --volumes-from registry \
+  "$REGISTRY_IMAGE" \
+  garbage-collect \
+  --delete-untagged \
+  /etc/docker/registry/config.yml; then
   echo "Registry garbage collection completed."
 else
   echo "WARNING: Registry garbage collection failed."
 fi
+
+echo "Starting registry..."
+docker start registry >/dev/null
 
 echo
 echo "Pruning unused Docker images older than ${DOCKER_IMAGE_MAX_AGE:-168h}..."
