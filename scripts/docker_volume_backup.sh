@@ -12,14 +12,13 @@ VOLUMES=(
   "acme-volume"
   "beszel-agent-data-volume"
   "beszel-data-volume"
-  "beszel-socket-volume"
   "beta-klurigo-service-uploads-volume"
-  "klurigo-gh-runner-data-volume"
-  "klurigo-gh-runner-tmp-volume"
+  "home-assistant-config-volume"
+  "memos-volume"
   "mongodb-data-volume"
   "nginx-proxy-certs-volume"
-  "nginx-proxy-html-volume"
   "nginx-proxy-vhost-volume"
+  "openwebui-data-volume"
   "pgadmin-data-volume"
   "pihole-dnsmasq-volume"
   "pihole-etc-volume"
@@ -29,14 +28,19 @@ VOLUMES=(
   "redis-data-volume"
   "registry-auth-volume"
   "registry-certs-volume"
-  "registry-data-volume"
   "vaultwarden-data-volume"
 )
 
 # 2) Destination directory on the NAS (make sure it's mounted):
 BACKUP_DIR="/mnt/nas/backup/docker"
 
-# Create destination if it doesn't exist
+# Abort if the NAS is not mounted.
+if ! mountpoint -q /mnt/nas; then
+  echo "ERROR: /mnt/nas is not mounted. Aborting backup." >&2
+  exit 1
+fi
+
+# Create destination if it doesn't exist.
 mkdir -p "$BACKUP_DIR"
 
 # 3) Date stamp in YYYY-MM-DD
@@ -44,6 +48,11 @@ DATESTAMP=$(date +%F)
 
 # 4) Loop over volumes
 for VOL in "${VOLUMES[@]}"; do
+  if ! docker volume inspect "$VOL" >/dev/null 2>&1; then
+    echo "ERROR: Docker volume '$VOL' does not exist. Aborting backup." >&2
+    exit 1
+  fi
+
   FILENAME="${VOL}_${DATESTAMP}.tar.gz"
   echo "Backing up volume '$VOL' → $BACKUP_DIR/$FILENAME"
 
