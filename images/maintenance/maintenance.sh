@@ -7,7 +7,22 @@ echo "========================================"
 echo
 
 echo "Running registry cleanup..."
-registry-cleanup
+
+if registry-cleanup; then
+  echo "Registry cleanup completed."
+else
+  echo "WARNING: Registry cleanup failed."
+fi
+
+echo
+echo "Running registry garbage collection..."
+
+if docker exec registry \
+  registry garbage-collect /etc/docker/registry/config.yml; then
+  echo "Registry garbage collection completed."
+else
+  echo "WARNING: Registry garbage collection failed."
+fi
 
 echo
 echo "Pruning unused Docker images older than ${DOCKER_IMAGE_MAX_AGE:-168h}..."
