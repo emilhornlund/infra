@@ -36,11 +36,16 @@ configs:
         - id: "rpg-sdl"
           trello:
             boardId: "6a183eaa979adc3c79bd095f"
+            backlogListId: "6a183eb0b8087f286160577a"
             readyListId: "6a886de923d8201c8dc6354f"
             workingListId: "6a251e0aeeb9b58703aec548"
             reviewListId: "6a886df67ee6877566c27b42"
             failedListId: "6a88a3a78bd625f1bbfcc90e"
             doneListId: "6a251e1069b2e1a737e5552a"
+            refinementLabelId: "6a8b2f7d324bb011aa3e1502"
+            featureLabelId: "6a183ead96b4721a28f71df9"
+            improvementLabelId: "6a183eaa05b59721b6e4548f"
+            bugLabelId: "6a183eadf4dd539542c3c8be"
           repository:
             path: "/opt/repositories/rpg-sdl"
             github: "emilhornlund/rpg-sdl"

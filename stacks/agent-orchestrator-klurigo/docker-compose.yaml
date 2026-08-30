@@ -75,11 +75,16 @@ configs:
         - id: "klurigo"
           trello:
             boardId: "675177656f0438ee74443791"
+            backlogListId: "67e07681b8dfe2060abef8f1"
             readyListId: "6a8af0e3b8dfa5747672bc0b"
             workingListId: "67517856a67e1803a9a0c418"
             reviewListId: "6a8af0e707db7e942ded9516"
             failedListId: "6a8af0eb5ecda68b600204cb"
             doneListId: "67c7e46fdefd3ab0128fd35e"
+            refinementLabelId: "6a940712dc6e83196c92e0f3"
+            featureLabelId: "67517769f803670f1a7792c0"
+            improvementLabelId: "6751776625ecca0ced9d3453"
+            bugLabelId: "675177683dc7102b8c3b95f6"
           repository:
             path: "/opt/repositories/klurigo"
             github: "emilhornlund/klurigo"

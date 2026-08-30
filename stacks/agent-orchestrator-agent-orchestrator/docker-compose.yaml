@@ -34,11 +34,16 @@ configs:
         - id: "agent-orchestrator"
           trello:
             boardId: "6a88b3c2e23e58c7cc104249"
+            backlogListId: "6a88b3cd0851ed02b988db11"
             readyListId: "6a88b3d9733354362c893f46"
             workingListId: "6a88b3f35bf125e5c0aef981"
             reviewListId: "6a88b3fd1b31e847eaf56753"
             failedListId: "6a88b40f09ed06635cc4fe01"
             doneListId: "6a88b409f84d5688ae77d09d"
+            refinementLabelId: "6a88b3c40e8fbec12dcdbd23"
+            featureLabelId: "6a88b3c53ae7e7515f7fdd71"
+            improvementLabelId: "6a88b3c3860f6b2655238a69"
+            bugLabelId: "6a88b3c404d1f7621c138c22"
           repository:
             path: "/opt/repositories/agent-orchestrator"
             github: "emilhornlund/agent-orchestrator"
