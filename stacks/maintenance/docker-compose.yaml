@@ -6,7 +6,8 @@ services:
     restart: unless-stopped
     environment:
       TZ: Europe/Stockholm
-      MAINTENANCE_CRON: "0 3 * * *"
+      BACKUP_CRON: "0 2 * * *"
+      MAINTENANCE_CRON: "0 4 * * *"
       REGISTRY_HOST: registry:5000
       REGISTRY_USER: ${REGISTRY_USER}
       REGISTRY_PASS: ${REGISTRY_PASS}
@@ -22,6 +23,7 @@ services:
       DOCKER_BUILD_CACHE_MAX_AGE: "168h"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/nas:/mnt/nas
     networks:
       - core-network
 

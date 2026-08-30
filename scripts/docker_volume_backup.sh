@@ -34,9 +34,11 @@ VOLUMES=(
 # 2) Destination directory on the NAS (make sure it's mounted):
 BACKUP_DIR="/mnt/nas/backup/docker"
 
-# Abort if the NAS is not mounted.
-if ! mountpoint -q /mnt/nas; then
-  echo "ERROR: /mnt/nas is not mounted. Aborting backup." >&2
+# Abort unless /mnt/nas is backed by the CIFS NAS filesystem.
+NAS_FSTYPE="$(findmnt -n -o FSTYPE /mnt/nas 2>/dev/null || true)"
+
+if [[ "$NAS_FSTYPE" != "cifs" ]]; then
+  echo "ERROR: /mnt/nas is not mounted as CIFS. Aborting backup." >&2
   exit 1
 fi
 
