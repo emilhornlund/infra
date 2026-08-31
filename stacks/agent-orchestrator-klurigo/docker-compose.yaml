@@ -115,6 +115,20 @@ configs:
               variant: "medium"
       workflow:
         pollIntervalSeconds: 15
+        logRetentionDays: 14
+      notifications:
+        email:
+          enabled: true
+          recipients:
+            - "emil.hornlund@me.com"
+          from: "emil.hornlund@me.com"
+          smtp:
+            host: "smtp.mail.me.com"
+            port: 587
+            secure: false
+            usernameEnv: "SMTP_USERNAME"
+            passwordEnv: "SMTP_PASSWORD"
+            timeoutSeconds: 30
 
 volumes:
   agent-orchestrator-klurigo-repository-volume:
