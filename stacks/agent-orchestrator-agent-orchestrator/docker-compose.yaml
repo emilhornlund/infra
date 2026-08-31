@@ -20,9 +20,9 @@ services:
     volumes:
       - agent-orchestrator-agent-orchestrator-repository-volume:/opt/repositories
       - agent-orchestrator-agent-orchestrator-worktrees-volume:/opt/.agent-worktrees/agent-orchestrator
-      - agent-orchestrator-agent-orchestrator-opencode-config-volume:/root/.config/opencode
-      - agent-orchestrator-agent-orchestrator-opencode-data-volume:/root/.local/share/opencode
       - agent-orchestrator-agent-orchestrator-logs-volume:/opt/agent-orchestrator/logs
+      - /home/emilhornlund/.config/opencode:/root/.config/opencode
+      - /home/emilhornlund/.local/share/opencode:/root/.local/share/opencode
       - /home/emilhornlund/.config/agent-orchestrator/signing/id_ed25519:/run/secrets/agent-orchestrator-signing-key:ro
     networks:
       - isolated
@@ -80,10 +80,6 @@ volumes:
     name: agent-orchestrator-agent-orchestrator-repository-volume
   agent-orchestrator-agent-orchestrator-worktrees-volume:
     name: agent-orchestrator-agent-orchestrator-worktrees-volume
-  agent-orchestrator-agent-orchestrator-opencode-config-volume:
-    name: agent-orchestrator-agent-orchestrator-opencode-config-volume
-  agent-orchestrator-agent-orchestrator-opencode-data-volume:
-    name: agent-orchestrator-agent-orchestrator-opencode-data-volume
   agent-orchestrator-agent-orchestrator-logs-volume:
     name: agent-orchestrator-agent-orchestrator-logs-volume
 

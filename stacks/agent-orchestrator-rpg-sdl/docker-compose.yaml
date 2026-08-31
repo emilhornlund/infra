@@ -22,9 +22,9 @@ services:
     volumes:
       - agent-orchestrator-rpg-sdl-repository-volume:/opt/repositories
       - agent-orchestrator-rpg-sdl-worktrees-volume:/opt/.agent-worktrees/rpg-sdl
-      - agent-orchestrator-rpg-sdl-opencode-config-volume:/root/.config/opencode
-      - agent-orchestrator-rpg-sdl-opencode-data-volume:/root/.local/share/opencode
       - agent-orchestrator-rpg-sdl-logs-volume:/opt/agent-orchestrator/logs
+      - /home/emilhornlund/.config/opencode:/root/.config/opencode
+      - /home/emilhornlund/.local/share/opencode:/root/.local/share/opencode
       - /home/emilhornlund/.config/agent-orchestrator/signing/id_ed25519:/run/secrets/agent-orchestrator-signing-key:ro
     networks:
       - isolated
@@ -80,10 +80,6 @@ volumes:
     name: agent-orchestrator-rpg-sdl-repository-volume
   agent-orchestrator-rpg-sdl-worktrees-volume:
     name: agent-orchestrator-rpg-sdl-worktrees-volume
-  agent-orchestrator-rpg-sdl-opencode-config-volume:
-    name: agent-orchestrator-rpg-sdl-opencode-config-volume
-  agent-orchestrator-rpg-sdl-opencode-data-volume:
-    name: agent-orchestrator-rpg-sdl-opencode-data-volume
   agent-orchestrator-rpg-sdl-logs-volume:
     name: agent-orchestrator-rpg-sdl-logs-volume
 

@@ -30,9 +30,9 @@ services:
     volumes:
       - agent-orchestrator-klurigo-repository-volume:/opt/repositories
       - agent-orchestrator-klurigo-worktrees-volume:/opt/.agent-worktrees/klurigo
-      - agent-orchestrator-klurigo-opencode-config-volume:/root/.config/opencode
-      - agent-orchestrator-klurigo-opencode-data-volume:/root/.local/share/opencode
       - agent-orchestrator-klurigo-logs-volume:/opt/agent-orchestrator/logs
+      - /home/emilhornlund/.config/opencode:/root/.config/opencode
+      - /home/emilhornlund/.local/share/opencode:/root/.local/share/opencode
       - /home/emilhornlund/.config/agent-orchestrator/signing/id_ed25519:/run/secrets/agent-orchestrator-signing-key:ro
     networks:
       - isolated
@@ -121,10 +121,6 @@ volumes:
     name: agent-orchestrator-klurigo-repository-volume
   agent-orchestrator-klurigo-worktrees-volume:
     name: agent-orchestrator-klurigo-worktrees-volume
-  agent-orchestrator-klurigo-opencode-config-volume:
-    name: agent-orchestrator-klurigo-opencode-config-volume
-  agent-orchestrator-klurigo-opencode-data-volume:
-    name: agent-orchestrator-klurigo-opencode-data-volume
   agent-orchestrator-klurigo-logs-volume:
     name: agent-orchestrator-klurigo-logs-volume
 
