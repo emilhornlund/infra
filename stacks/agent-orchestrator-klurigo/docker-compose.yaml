@@ -73,6 +73,7 @@ configs:
     content: |
       projects:
         - id: "klurigo"
+          autoMerge: false
           trello:
             boardId: "675177656f0438ee74443791"
             backlogListId: "67e07681b8dfe2060abef8f1"
@@ -110,6 +111,7 @@ configs:
             remediation:
               model: "openai/gpt-5.6-luna"
               variant: "xhigh"
+              maxPasses: 1
             commit:
               model: "openai/gpt-5.6-luna"
               variant: "medium"
@@ -119,6 +121,12 @@ configs:
       notifications:
         email:
           enabled: true
+          events:
+            humanReview: true
+            failed: true
+            refinementComplete: true
+            done: false
+            attentionRequired: true
           recipients:
             - "emil.hornlund@me.com"
           from: "emil.hornlund@me.com"

@@ -32,6 +32,7 @@ configs:
     content: |
       projects:
         - id: "agent-orchestrator"
+          autoMerge: false
           trello:
             boardId: "6a88b3c2e23e58c7cc104249"
             backlogListId: "6a88b3cd0851ed02b988db11"
@@ -69,6 +70,7 @@ configs:
             remediation:
               model: "openai/gpt-5.6-luna"
               variant: "xhigh"
+              maxPasses: 1
             commit:
               model: "openai/gpt-5.6-luna"
               variant: "medium"
@@ -78,6 +80,12 @@ configs:
       notifications:
         email:
           enabled: true
+          events:
+            humanReview: true
+            failed: true
+            refinementComplete: true
+            done: false
+            attentionRequired: true
           recipients:
             - "emil.hornlund@me.com"
           from: "emil.hornlund@me.com"

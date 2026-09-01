@@ -34,6 +34,7 @@ configs:
     content: |
       projects:
         - id: "rpg-sdl"
+          autoMerge: false
           trello:
             boardId: "6a183eaa979adc3c79bd095f"
             backlogListId: "6a183eb0b8087f286160577a"
@@ -69,6 +70,7 @@ configs:
             remediation:
               model: "openai/gpt-5.6-luna"
               variant: "xhigh"
+              maxPasses: 1
             commit:
               model: "openai/gpt-5.6-luna"
               variant: "medium"
@@ -78,6 +80,12 @@ configs:
       notifications:
         email:
           enabled: true
+          events:
+            humanReview: true
+            failed: true
+            refinementComplete: true
+            done: false
+            attentionRequired: true
           recipients:
             - "emil.hornlund@me.com"
           from: "emil.hornlund@me.com"
