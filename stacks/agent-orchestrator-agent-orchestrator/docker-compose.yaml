@@ -24,6 +24,7 @@ services:
       - /home/emilhornlund/.config/opencode:/root/.config/opencode
       - /home/emilhornlund/.local/share/opencode:/root/.local/share/opencode
       - /home/emilhornlund/.config/agent-orchestrator/signing/id_ed25519:/run/secrets/agent-orchestrator-signing-key:ro
+      - /home/emilhornlund/.agent-context/agent-orchestrator-agent-orchestrator:/opt/.agent-context
     networks:
       - isolated
 
@@ -60,16 +61,16 @@ configs:
             timeoutMinutes: 360
             refinement:
               model: "openai/gpt-5.6-luna"
-              variant: "xhigh"
+              variant: "high"
             implementation:
               model: "openai/gpt-5.6-luna"
-              variant: "xhigh"
+              variant: "high"
             review:
               model: "openai/gpt-5.6-luna"
               variant: "high"
             remediation:
               model: "openai/gpt-5.6-luna"
-              variant: "xhigh"
+              variant: "high"
               maxPasses: 1
             commit:
               model: "openai/gpt-5.6-luna"
@@ -77,6 +78,10 @@ configs:
       workflow:
         pollIntervalSeconds: 15
         logRetentionDays: 14
+        contextRetentionDays: 14
+        contextRoot: "/opt/.agent-context"
+        maxAttachmentBytes: 52428800
+        maxTotalAttachmentBytes: 209715200
       notifications:
         email:
           enabled: true
