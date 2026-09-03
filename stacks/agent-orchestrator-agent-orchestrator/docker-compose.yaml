@@ -23,6 +23,7 @@ services:
       - agent-orchestrator-agent-orchestrator-logs-volume:/opt/agent-orchestrator/logs
       - /home/emilhornlund/.config/opencode:/root/.config/opencode
       - /home/emilhornlund/.local/share/opencode:/root/.local/share/opencode
+      - /home/emilhornlund/.config/agent-orchestrator/github/app.pem:/run/secrets/agent-orchestrator-github-app-key:ro
       - /home/emilhornlund/.config/agent-orchestrator/signing/id_ed25519:/run/secrets/agent-orchestrator-signing-key:ro
       - /home/emilhornlund/.agent-context/agent-orchestrator-agent-orchestrator:/opt/.agent-context
     networks:
@@ -54,9 +55,13 @@ configs:
             setupCommand: "yarn install --frozen-lockfile"
             validationCommand: "yarn build && yarn format:check && yarn validate"
             gitIdentity:
-              name: "Emil Hörnlund"
+              name: "Agent Orchestrator Bot"
               email: "10013373+emilhornlund@users.noreply.github.com"
               signingKey: "/run/secrets/agent-orchestrator-signing-key"
+            githubApp:
+              appId: "4819208"
+              installationId: "158808000"
+              privateKeyPath: "/run/secrets/agent-orchestrator-github-app-key"
           opencode:
             timeoutMinutes: 360
             refinement:
